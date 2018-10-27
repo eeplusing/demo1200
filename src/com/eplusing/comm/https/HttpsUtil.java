@@ -1,4 +1,4 @@
-package com.eplusing.communication;
+package com.eplusing.comm.https;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
