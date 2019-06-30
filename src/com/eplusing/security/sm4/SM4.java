@@ -9,6 +9,10 @@ public class SM4 {
 	  
 	    private long GET_ULONG_BE(byte[] b, int i)   
 	    {  
+	    	/*System.out.println(b[i] & 0xff);
+	    	System.out.println(b[i+1] & 0xff);
+	    	System.out.println(b[i+2] & 0xff);
+	    	System.out.println(b[i+3] & 0xff);*/
 	        long n = (long)(b[i] & 0xff) << 24 | (long)((b[i + 1] & 0xff) << 16) | (long)((b[i + 2] & 0xff) << 8) | (long)(b[i + 3] & 0xff) & 0xffffffffL;  
 	        return n;  
 	    }  
@@ -149,7 +153,8 @@ public class SM4 {
 	        for (; i < 32; i++)   
 	        {  
 	            k[(i + 4)] = (k[i] ^ sm4CalciRK(k[(i + 1)] ^ k[(i + 2)] ^ k[(i + 3)] ^ (long) CK[i]));  
-	            SK[i] = k[(i + 4)];  
+	            SK[i] = k[(i + 4)]; 
+	            System.out.println("rk[" + i + "]=" + Long.toHexString(SK[i]));
 	        }  
 	    }  
 	  
@@ -338,5 +343,5 @@ public class SM4 {
 	        bins.close();  
 	        bous.close();  
 	        return output;  
-	    }  
+	}
 }

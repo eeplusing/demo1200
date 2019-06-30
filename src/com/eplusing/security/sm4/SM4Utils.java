@@ -1,6 +1,7 @@
 package com.eplusing.security.sm4;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,10 +12,43 @@ public class SM4Utils {
 //	private String secretKey = "";  
 //    private String iv = "";  
 //    private boolean hexString = false;  
-      
+	 public static void main(String[] args) throws IOException   
+	    {  
+	        String plainText = "0123456789ABCDEFFEDCBA9876543210";  
+	          
+	        SM4Utils sm4 = new SM4Utils();  
+	        //sm4.secretKey = "0000000000000#$$";  
+	        sm4.secretKey = "0123456789ABCDEFFEDCBA9876543210";  
+	        
+	        //19088743
+	        sm4.hexString = false;  
+	        System.out.println("ECB模式加密");  
+	        String cipherText = sm4.encryptData_ECB(plainText);  
+	        System.out.println("密文: " + cipherText);  
+	        System.out.println("");  
+	        
+	        plainText = sm4.decryptData_ECB(cipherText);  
+	        System.out.println("明文: " + plainText);  
+	        System.out.println("");  
+	          
+	        /*System.out.println("CBC模式加密");  
+	        sm4.iv = "UISwD9fW6cFh9SNS";  
+	        cipherText = sm4.encryptData_CBC(plainText);  
+	        System.out.println("密文: " + cipherText);  
+	        System.out.println("");  
+	          
+	        plainText = sm4.decryptData_CBC(cipherText);  
+	        System.out.println("明文: " + plainText);  
+	        
+	        System.out.println("CBC模式解密"); 
+	        System.out.println("密文：4esGgDn/snKraRDe6uM0jQ==");
+	        String cipherText2 = "4esGgDn/snKraRDe6uM0jQ==";
+	        plainText = sm4.decryptData_CBC(cipherText2);
+	        System.out.println("明文: " + plainText);  */
+	    }  
     public String secretKey = "";  
     private String iv = "";  
-    public boolean hexString = false;  
+    public boolean hexString = true;  
     
     public SM4Utils()  
     {  
@@ -66,7 +100,10 @@ public class SM4Utils {
             byte[] keyBytes;  
             if (hexString)  
             {  
-                keyBytes = Util.hexStringToBytes(secretKey);  
+                keyBytes = Util.hexStringToBytes(secretKey); 
+                for (byte b : keyBytes) {
+					System.out.print(b + ",");
+				}
             }  
             else  
             {  
@@ -75,7 +112,7 @@ public class SM4Utils {
               
             SM4 sm4 = new SM4();  
             sm4.sm4_setkey_enc(ctx, keyBytes);  
-            byte[] encrypted = sm4.sm4_crypt_ecb(ctx, plainText.getBytes("GBK"));  
+            byte[] encrypted = sm4.sm4_crypt_ecb(ctx, plainText.getBytes());  
             String cipherText = new BASE64Encoder().encode(encrypted);  
             if (cipherText != null && cipherText.trim().length() > 0)  
             {  
@@ -195,36 +232,5 @@ public class SM4Utils {
         }  
     }  
       
-    public static void main(String[] args) throws IOException   
-    {  
-        String plainText = "0123456789ABCDEFFEDCBA9876543210";  
-          
-        SM4Utils sm4 = new SM4Utils();  
-        sm4.secretKey = "0123456789ABCDEFFEDCBA9876543210";  
-        sm4.hexString = true;  
-          
-        System.out.println("ECB模式加密");  
-        String cipherText = sm4.encryptData_ECB(plainText);  
-        System.out.println("密文: " + cipherText);  
-        System.out.println("");  
-          
-        plainText = sm4.decryptData_ECB(cipherText);  
-        System.out.println("明文: " + plainText);  
-        System.out.println("");  
-          
-        System.out.println("CBC模式加密");  
-        sm4.iv = "UISwD9fW6cFh9SNS";  
-        cipherText = sm4.encryptData_CBC(plainText);  
-        System.out.println("密文: " + cipherText);  
-        System.out.println("");  
-          
-        plainText = sm4.decryptData_CBC(cipherText);  
-        System.out.println("明文: " + plainText);  
-        
-        System.out.println("CBC模式解密"); 
-        System.out.println("密文：4esGgDn/snKraRDe6uM0jQ==");
-        String cipherText2 = "4esGgDn/snKraRDe6uM0jQ==";
-        plainText = sm4.decryptData_CBC(cipherText2);
-        System.out.println("明文: " + plainText);  
-    }  
+   
 }
