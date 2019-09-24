@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace命名空间，为了对sql语句进行隔离，方便管理 ，mapper开发dao方式，使用namespace有特殊作用
+使用mapper代理的方式开发，mapper接口方法入参个数只有一个，可扩展性没有问题，可以通过pojo扩展入参
+mapper代理开发方式规则:
+ -->
+<!-- 1.mapper代理开发时将namespace指定为mapper接口的全限定名, 将UserMapper.java与UserMapper.xml关联-->
+ <mapper namespace="com.meicano.mybatis.mapper.UserMapper">
+ 
+ 	<!-- 定义resultMap 
+ 		type:resultMap最终对应的java类型，可以使用别名 
+ 		id:对resultMap的唯一标识
+ 	-->
+ 	<resultMap type="user" id="userResultMap">
+ 		<!-- id表示查询结果中的唯一标识
+ 		column:查询出来的列名
+ 		property:type指定的pojo类型的属性名
+ 		最终 resultMap对colum和property作一个映射关系
+ 		 -->
+ 		<id column="id_" property="id"/>
+ 		<!-- result对普通名的映射关系
+ 		column:查询出来的列名
+ 		property:type指定的pojo类型的属性名
+ 		最终 resultMap对colum和property作一个映射关系
+ 		 -->
+ 		<result column="username_" property="username"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="userCustom" id="userAndDetailResultMap">
+ 		<!-- 用户信息 -->
+ 		<id column="user_id" property="id"/>
+ 		<result column="username" property="username"/>
+ 		<result column="address" property="address"/>
+ 		<result column="sex" property="sex"/>
+ 		<result column="birthday" property="birthday"/>
+ 		
+ 		<!-- 订单信息 一个用户对应多个订单使用collection映射 -->
+ 		<collection property="ordersList" ofType="com.meicano.mybatis.po.Orders">
+ 			<id column="id" property="id"/>
+ 			<result column="user_id" property="userId"/>
+ 			<result column="number" property="number"/>
+ 			<result column="createtime" property="createtime"/>
+ 			<result column="note" property="note"/>
+ 			
+ 			<!-- 订单那明细信息 -->
+ 			<collection property="orderDetails" ofType="OrderDetail">
+ 				<id column="orderdetail_id" property="id"/>
+ 				<result column="orders_id" property="ordersId"/>
+ 				<result column="items_id" property="itemsId"/>
+ 				<result column="items_num" property="itemsNum"/>
+ 				<!-- 商品信息 一个订单明细对应一个商品 -->
+ 				<association property="item" javaType="Items">
+ 					<id column="items_id" property="id"/>
+	 				<result column="items_name" property="name"/>
+	 				<result column="price" property="price"/>
+	 				<result column="detail" property="detail"/>
+	 				<result column="items_createtime" property="createtime"/>
+ 				</association>
+ 			</collection>
+ 		</collection>
+ 	</resultMap>
+ 	
+ 	
+ 	<!-- 定义sql片段 
+ 	id:sql片段的唯一标识
+ 	经验：sql片段中不要包含<where>
+ 	使用方法：1.定义sql片段；2.引用sql片段，若引用的sql片段不再同一个mapper.xml中，在引用时要加上命名空间
+ 	-->
+ 	<sql id="query_user_where">
+ 	 		<if test="userCustom!=null">
+	 			<if test="userCustom.sex!=null">
+	 			and user.sex=${userCustom.sex}
+	 			</if>
+	 			<if test="userCustom.username!=null">
+	 			and user.username LIKE '%${userCustom.username}%'
+	 			</if>
+	 			<if test="ids!=null">
+	 				<!-- foreach遍历传入的ids
+	 				collection：传入的集合
+	 				item:每个遍历的对象
+	 				open:开始遍历时拼接的串
+	 				close:结束遍历时拼接的串
+	 				sepatator:遍历的中间需要拼接的串
+	 				-->
+	 				<foreach collection="ids" item="user_id" open="AND (id in(" close="))" separator=",">
+	 					${user_id}
+	 				</foreach>
+<!-- 	 				<foreach collection="ids" item="user_id" open="AND (" close=")" separator="or">
+	 					id=#{user_id}
+	 				</foreach> -->
+	 			</if>
+	 		</if>
+ 	</sql>
+ 	
+ 	
+ 	<!-- resultType与resultMap使用原则：
+ 		resultMap是针对那些对查询结果映射有特殊要求的功能
+ 	 -->
+ 	<!-- 查询用户及用户购买商品信息 -->
+ 	<select id="findUserAndDetailResultMap" resultMap="userAndDetailResultMap">
+ 		select orders.*, 
+			user.username, 
+			user.address, 
+			user.sex, 
+			user.birthday, 
+			orderdetail.id orderdetail_id,
+			orderdetail.items_id, 
+			orderdetail.items_num,
+			orderdetail.orders_id,
+			items.name items_name,
+			items.price,
+			items.detail,
+			items.createtime items_createtime
+		from 
+			orders, 
+			user, 	
+			orderdetail,
+			items
+		where user.id=orders.user_id and orders.id = orderdetail.orders_id and orderdetail.items_id = items.id;
+ 	</select>
+ 	
+ 	<!-- 根据id查询用户 -->
+ 	<!-- id标识一个sql  
+ 		parameterType输入参数类型
+ 		resultType输出结果类型
+ 	-->
+ 	<!-- 2.statementId对应UserMapper.java中的方法名 ,parameterType对应方法的入参类型，resultType对应方法的返回类型-->
+ 	<select id="findUserById" parameterType="int" resultType="user">
+ 		select * from user where id = #{id}
+ 	</select>
+ 	<select id="findUserByName" parameterType="String" resultType="user">
+ 		<!-- sql拼接不能防止sql注入 -->
+ 		<!-- select * from user where username like '%${value}%' -->
+		select * from user where username like #{username}
+ 	</select>
+ 	<!-- 添加用户 -->
+ 	<!-- #{}接收pojo数据，可以使用ognl解析出pojo的值
+ 	#{username}标识从parameterType中获取pojo的属性值
+ 	selectKey:用于主键返回，定义了获取主键的sql
+ 	order:定义了查询主键的顺序，before在执行查询操作之前，after在执行查询操作之后
+ 	keyProperty:将主键设置到哪个属性
+ 	resultType:select LAST_INSERT_ID的结果类型
+ 	 -->
+ 	 <!-- parameterType指定包装类型 
+ 	 %${userCustom.username}%:userCustom是userQueryVo中属性的值，通过OGNL获取属性的值
+ 	 resultType:作为输出映射，查询出来的列名和pojo属性名一致，才可以映射成功。
+ 	 如果查询出来的列名和均不予pojo属性名一致则没有创建pojo对象，只要有个属性名映射成功，就会创建对象。
+ 	 resultType：
+ 	 	结果集只有一行一列时，可使用简单类型，如int；
+ 	 	结果集为pojo对象或pojo列表时，使用pojo类，前者java方法返回pojo,后者返回pojo List
+ 	 -->
+ 	 <select id="findUserList" parameterType="userQueryVo" resultType="userCustom">
+ 	 	<!-- select * from user WHERE sex=${userCustom.sex} and username LIKE '%${userCustom.username}%'; -->
+ 	 	select * from user 
+ 	 	<where>
+ 	 		<!-- 若引用的sql片段不再同一个mapper.xml中，在引用时要加上命名空间 -->
+ 	 		<include refid="query_user_where"></include>
+ 	 	</where>
+ 	 </select>
+ 	 <!-- 输出简单类型
+ 	 	功能：自定义查询条件，返回查询记录个数，通常用于分页查询
+ 	 -->
+ 	 <select id="findUserCount" parameterType="userQueryVo" resultType="int">
+ 	 	select count(*) from user 
+ 	 	<where>
+ 	 		<if test="userCustom!=null">
+ 	 			<if test="userCustom.sex!=null">
+ 	 			and user.sex=${userCustom.sex}
+ 	 			</if>
+ 	 			<if test="userCustom.username!=null">
+ 	 			and user.username LIKE '%${userCustom.username}%'
+ 	 			</if>
+ 	 		</if>
+ 	 	</where>
+ 	 </select>
+ 	 <!-- 返回结果为map 
+ 	 resultType:定义的resultMap的id,如果该resultMap在其他mapper.xml文件中，则需要在id前添加命名空间
+ 	 -->
+ 	 <select id="findUserByIdResultMap" parameterType="int" resultMap="userResultMap">
+ 	 	select id id_, username username_ from user WHERE id=#{value};
+ 	 </select>
+ 	<insert id="insertUser" parameterType="user">
+ 		<selectKey keyProperty="id" order="AFTER" resultType="int">
+ 			select LAST_INSERT_ID()
+ 		</selectKey>
+ 		INSERT INTO USER (username, birthday, sex, address) values (#{username}, #{birthday}, #{sex}, #{address})
+ 	</insert>
+ 	
+ 	<!-- 利用mysql的uuid生成主键 -->
+ 	<!-- <insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 		<selectKey keyProperty="id" order="BEFORE" resultType="string">
+ 			select UUID();
+ 		</selectKey>
+ 		INSERT INTO USER (id ,username, birthday, sex, address) values (#{id}, #{username}, #{birthday}, #{sex}, #{address});
+ 	</insert> -->
+ 	
+ 	<!-- oracle 
+ 	<insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 		<selectKey keyProperty="id" order="BEFORE" resultType="int">
+ 			select 序列名.nextval() from dual;
+ 		</selectKey>
+ 		INSERT INTO USER (id ,username, birthday, sex, address) values (#{id}, #{username}, #{birthday}, #{sex}, #{address});
+ 	</insert>
+ 	-->
+ 	<!-- 更新用户  要求传入的user对象中必须包含id-->
+ 	<update id="updateUser" parameterType="user">	
+		update user set username=#{username}, birthday=#{birthday} where id=#{id}
+ 	</update>
+ 	<!-- 删除用户 -->
+ 	<delete id="deleteUser" parameterType="int">
+ 		delete from user where user.id=#{id}
+ 	</delete>
+ 	
+ 	
+ </mapper>	
