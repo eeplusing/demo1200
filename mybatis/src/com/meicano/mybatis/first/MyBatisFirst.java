@@ -12,9 +12,37 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.meicano.mybatis.mapper.TeacherMapper;
+import com.meicano.mybatis.po.Teacher;
 import com.meicano.mybatis.po.User;
 
 public class MyBatisFirst {
+	
+	
+	
+	@Test
+	public void testOneToOne() {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		System.err.println(sqlSession);
+		
+		TeacherMapper teacherMapper = sqlSession.getMapper(TeacherMapper.class);
+		
+		List<Teacher> list = teacherMapper.queryTeacherPositionResultMap();
+		
+		System.out.println(list);
+		
+		Teacher teacher = teacherMapper.queryTeacherPositionResultMapById(1);
+		System.out.println(teacher);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args){
 		
 	}
@@ -37,7 +65,7 @@ public class MyBatisFirst {
 		
 		User user = new User();
 		user.setUsername("–°√˜≤‚ ‘≤Â»Î");
-		user.setAddress("SZ");;
+		user.setAddress("SZ");
 		user.setSex("2");
 		user.setBirthday(new Date());
 		try {
