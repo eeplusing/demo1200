@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meicano.mybatis.mapper.TeacherMapper">
+	<resultMap type="com.meicano.mybatis.po.Teacher" id="teacherPositionResultMap">
+		<id property="id" column="id"/>
+		<result property="no" column="t_no"/>
+		<result property="name" column="t_name"/>
+		<!-- association：配置的一对一属性 -->
+		<!-- property：名字
+			 javaType：类型
+		 -->
+		<association property="pos" javaType="com.meicano.mybatis.po.Position">
+			<id property="id" column="id"/>
+			<result property="name" column="t_pos_name"/>
+		</association>
+	</resultMap>
+	
+	<!-- 一对一关联查询，查询老师及其对应的职位 -->
+	<!-- 注意：id不能相同，当多个值传入，比如包装类的时候，我们才能够用SQL片段的形式来做if判断，单个值是不行的 -->
+	<select id="queryTeacherPositionResultMapById" resultMap="teacherPositionResultMap" parameterType="Integer">
+		SELECT *
+		FROM tb_teacher t
+		LEFT JOIN tb_position p
+		ON t.position_id = p.id
+		where t.id = #{id}
+	</select>
+	
+	<resultMap type="com.meicano.mybatis.po.TeacherDetail" id="teacherDetailResultMap">
+		<id property="id" column="id"/>
+		<result property="no" column="t_no"/>
+		<result property="name" column="t_name"/>
+		<result property="posName" column="t_pos_name"/>
+		<result property="posId" column="position_id"/>
+		<!-- association：配置的一对一属性 -->
+		<!-- property：名字
+			 javaType：类型
+		 -->
+		<association property="pos" javaType="com.meicano.mybatis.po.Position">
+			<id property="id" column="id"/>
+			<result property="name" column="t_pos_name"/>
+		</association>	
+		<collection property="studentList" javaType="List" ofType="com.meicano.mybatis.po.Student">
+			<result property="name" column="t_stu_name"/>
+		</collection>
+	</resultMap>
+	
+	<select id="queryTeacherDetailById" resultMap="teacherDetailResultMap" parameterType="Integer">
+		SELECT t.*,p.t_pos_name,s.t_stu_name
+		FROM tb_teacher t
+		LEFT JOIN tb_position p ON t.position_id = p.id 
+		LEFT JOIN tb_stu_teach st ON st.t_teach_id = t.id
+		LEFT JOIN tb_student s ON s.id = st.t_stu_id
+		where t.id = #{id}
+	</select>
+	
+	
+ 
+	<select id="queryTeacherPositionResultMap" resultMap="teacherPositionResultMap">
+		SELECT t.*, p.t_pos_name
+		FROM tb_teacher t
+		LEFT JOIN tb_position p
+		ON t.`position_id` = p.id
+	</select> 
+</mapper>
