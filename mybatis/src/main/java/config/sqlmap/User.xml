@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace命名空间，为了对sql语句进行隔离，方便管理 ，mapper开发dao方式，使用namespace有特殊作用
+mapper代理开发时将namespace指定为mapper接口的全限定名
+ -->
+ <mapper namespace="test">
+ 	<!-- 根据id查询用户 -->
+ 	<!-- id标识一个sql 
+ 		parameterType输入参数类型
+ 		resultType输出结果类型
+ 	-->
+ 	<select id="findUserById" parameterType="int" resultType="com.meicano.mybatis.po.User">
+ 		select * from user where id = #{id}
+ 	</select>
+ 	<select id="findUserByName" parameterType="String" resultType="com.meicano.mybatis.po.User">
+ 		<!-- sql拼接不能防止sql注入 -->
+ 		<!-- select * from user where username like '%${value}%' -->
+		select * from user where username like #{username}
+ 	</select>
+ 	<!-- 添加用户 -->
+ 	<!-- #{}接收pojo数据，可以使用ognl解析出pojo的值
+ 	#{username}标识从parameterType中获取pojo的属性值
+ 	selectKey:用于主键返回，定义了获取主键的sql
+ 	order:定义了查询主键的顺序，before在执行查询操作之前，after在执行查询操作之后
+ 	keyProperty:将主键设置到哪个属性
+ 	resultType:select LAST_INSERT_ID的结果类型
+ 	 -->
+ 	<insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 		<selectKey keyProperty="id" order="AFTER" resultType="int">
+ 			select LAST_INSERT_ID()
+ 		</selectKey>
+ 		INSERT INTO USER (username, birthday, sex, address) values (#{username}, #{birthday}, #{sex}, #{address})
+ 	</insert>
+ 	
+ 	<!-- 利用mysql的uuid生成主键 -->
+ 	<!-- <insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 		<selectKey keyProperty="id" order="BEFORE" resultType="string">
+ 			select UUID();
+ 		</selectKey>
+ 		INSERT INTO USER (id ,username, birthday, sex, address) values (#{id}, #{username}, #{birthday}, #{sex}, #{address});
+ 	</insert> -->
+ 	
+ 	<!-- oracle 
+ 	<insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 		<selectKey keyProperty="id" order="BEFORE" resultType="int">
+ 			select 序列名.nextval() from dual;
+ 		</selectKey>
+ 		INSERT INTO USER (id ,username, birthday, sex, address) values (#{id}, #{username}, #{birthday}, #{sex}, #{address});
+ 	</insert>
+ 	-->
+ 	<!-- 更新用户  要求传入的user对象中必须包含id-->
+ 	<update id="updateUser" parameterType="com.meicano.mybatis.po.User">	
+		update user set username=#{username}, birthday=#{birthday} where id=#{id}
+ 	</update>
+ 	<!-- 删除用户 -->
+ 	<delete id="deleteUser" parameterType="int">
+ 		delete from user where user.id=#{id}
+ 	</delete>
+ 	
+ 	
+ </mapper>	
