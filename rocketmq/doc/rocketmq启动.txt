@@ -1,0 +1,74 @@
+
+
+cd /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release
+ 
+# 1.先启动mqnamesrv  
+#启动命令
+nohup sh bin/mqnamesrv &
+# 或者加上输出日志
+nohup sh bin/mqnamesrv  >  ~/logs/rocketmqlogs/namesrv.log  &
+nohup sh bin/mqnamesrv -n 129.204.176.33:9876 >  ~/logs/rocketmqlogs/namesrv.log  &
+# 停止命令
+sh bin/mqshutdown namesrv
+sh bin/mqshutdown namesrv
+ 
+# 2.启动broker
+#startBroker.sh
+#注意，下面的ip地址以及端口请填写你安装的rocketmq机器的ip地址及端口。
+nohup sh bin/mqbroker -c conf/broker.conf  -n 129.204.176.33:9876 autoCreateTopicEnable=true  >  ~/logs/rocketmqlogs/broker.log &
+
+sh bin/mqshutdown broker
+
+# 查看日志
+tail  -f  ~/logs/rocketmqlogs/broker.log
+#stopBroker.sh
+
+
+
+
+export JAVA_HOME=/usr/local/java/jdk1.8.0_251
+export JRE_HOME=$JAVA_HOME/jre  
+export PATH=$PATH:$JAVA_HOME/bin  
+export CLASSPATH=./:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+
+
+4.rocketmq管理界面
+git clone https://github.com/apache/rocketmq-externals
+
+cd /usr/local/rocketmq/rocketmq-externals/rocketmq-console/src/main/resources
+
+vim application.properties
+
+# 修改如下配置
+server.port=8080 // 服务端口号
+rocketmq.config.namesrvAddr=127.0.0.1:9876 // 配置服务地址
+
+rocketmq.config.dataPath=/tmp/rocketmq-console/data // mq数据路径，可以自己修改
+
+cd /usr/local/rocketmq/rocketmq-externals/rocketmq-console
+mvn clean package -Dmaven.test.skip=true
+
+nohup java -jar rocketmq-console-ng-1.0.1.jar --server.port=8080 --rocketmq.config.namesrvAddr=127.0.0.1:9876
+
+cd /usr/local/rocketmq/rocketmq-externals/rocketmq-console
+mvn clean package -Dmaven.test.skip=true
+
+
+3.执行测试
+# 生产者生产消息
+sh tools.sh org.apache.rocketmq.example.quickstart.Producer
+# 消费者消费消息
+sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer
+
+
+
+
+
+java -jar rocketmq-console-ng-1.0.0.jar --server.port=8989 --rocketmq.config.namesrvAddr=127.0.0.1:9876
+
+
+来查看 broker 的配置参数   sh bin/mqbroker -m
+
+
+
+
