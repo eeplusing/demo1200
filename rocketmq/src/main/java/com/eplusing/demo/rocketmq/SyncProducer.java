@@ -1,13 +1,15 @@
-package com.deplusing.demo.rocketmq;
+package com.eplusing.demo.rocketmq;
 
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 
-public class OnewayProducer {
-    public static void main(String[] args) throws Exception{
+public class SyncProducer {
+    public static void main(String[] args) throws Exception {
         //Instantiate with a producer group name.
-        DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+        DefaultMQProducer producer = new
+            DefaultMQProducer("please_rename_unique_group_name");
         // Specify name server addresses.
         producer.setNamesrvAddr("129.204.176.33:9876");
         //Launch the instance.
@@ -20,10 +22,10 @@ public class OnewayProducer {
                     i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
             );
             //Call send message to deliver message to one of brokers.
-            producer.sendOneway(msg);
+            SendResult sendResult = producer.send(msg);
+            System.out.printf("%s%n", sendResult);
         }
-        //Wait for sending to complete
-        Thread.sleep(5000);        
+        //Shut down once the producer instance is not longer in use.
         producer.shutdown();
     }
 }

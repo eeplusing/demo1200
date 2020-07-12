@@ -1,4 +1,4 @@
-package com.deplusing.demo.rocketmq;
+package com.eplusing.demo.rocketmq;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
