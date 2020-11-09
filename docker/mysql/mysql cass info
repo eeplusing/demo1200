@@ -56,6 +56,8 @@ docker run -p 3306:3306 --name mysql \
         3.添加linux规则，把要挂载的目录添加到selinux白名单
             # 更改安全性文本的格式如下
             chcon [-R] [-t type] [-u user] [-r role] 文件或者目录
+            
+        4.把映射的目录权限放大 改成766
             选顷不参数： 
             -R  ：该目录下的所有目录也同时修改； 
             -t  ：后面接安全性本文的类型字段，例如 httpd_sys_content_t ； 
@@ -67,5 +69,30 @@ docker run -p 3306:3306 --name mysql \
   解决方法：
  使用方案1.
   
+  
+  
+  
+  
+4.navicat远程登陆提示认证失败，更新客户端，
+解决方法：重置密码 WITH mysql_native_password
+mysql> select host,user from user; 
++-----------+------------------+
+| host      | user             |
++-----------+------------------+
+| %         | root             |
+| localhost | mysql.infoschema |
+| localhost | mysql.session    |
+| localhost | mysql.sys        |
+| localhost | root             |
++-----------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '150906cpp';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '150906cpp';         
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
   
 
