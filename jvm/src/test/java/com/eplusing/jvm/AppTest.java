@@ -1,4 +1,4 @@
-package org.jvm;
+package com.eplusing.jvm;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
