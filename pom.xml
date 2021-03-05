@@ -4,7 +4,7 @@
 
   <groupId>com.eplusing</groupId>
   <artifactId>demo1200</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>demo1200</name>
