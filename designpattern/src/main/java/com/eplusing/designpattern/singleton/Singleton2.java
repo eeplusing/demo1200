@@ -29,7 +29,7 @@ public class Singleton2 {
 	}
 	
 	
-	//ÀÁººÊ½
+	//æ‡’æ±‰å¼
 	private static Singleton2 instance1 = null;
 	public static synchronized Singleton2 getInstance1(){
 		if(null == instance1){
