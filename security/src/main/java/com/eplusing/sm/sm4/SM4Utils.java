@@ -1,7 +1,6 @@
-package com.eplusing.security.sm4;
+package com.eplusing.sm.sm4;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

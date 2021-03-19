@@ -7,11 +7,9 @@
     <artifactId>demo1200</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.eplusing</groupId>
   <artifactId>leetcode</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>leetcode</name>
-  <url>http://maven.apache.org</url>
+  <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

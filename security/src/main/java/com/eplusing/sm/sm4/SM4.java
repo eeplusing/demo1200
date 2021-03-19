@@ -1,4 +1,4 @@
-package com.eplusing.security.sm4;
+package com.eplusing.sm.sm4;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;  
 

@@ -4,16 +4,28 @@
 
   <groupId>com.eplusing</groupId>
   <artifactId>demo1200</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>demo1200</name>
-  <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+<modules>
+  <module>designpattern</module>
+  <module>docker</module>
+  <module>javafeature</module>
+  <module>jvm</module>
+  <module>microservice</module>
+  <module>mvn</module>
+  <module>mybatis</module>
+  <module>rocketmq</module>
+  <module>security</module>
+  <module>leetcode</module>
+  <module>sm</module>
+    <module>base</module>
 
+</modules>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

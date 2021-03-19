@@ -7,10 +7,9 @@
     <artifactId>demo1200</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>microservice</artifactId>
+  <artifactId>docker</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>microservice</name>
-  <url>http://maven.apache.org</url>
+  <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
