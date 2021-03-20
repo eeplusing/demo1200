@@ -24,6 +24,7 @@
   <module>leetcode</module>
   <module>sm</module>
     <module>base</module>
+    <module>db</module>
 
 </modules>
   <dependencies>
