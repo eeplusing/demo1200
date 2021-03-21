@@ -2,7 +2,9 @@
 
 public class StringTest {
 	public static void main(String[] a){
-		String s = "1" + "2" + "3";
+		public class MyClassLoader extends ClassLoader {
+
+			String s = "1" + "2" + "3";
 		//s1的地址是指向堆内存
 		String s1 = new String("123");
 		//s2的地址是指向方法区中的常量池
