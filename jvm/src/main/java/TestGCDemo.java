@@ -17,6 +17,7 @@ public class TestGCDemo {
 	 * jmap -heap 7436  查看java进程内存使用情况
 	 * */
 	public static void main(String[] args) {
+		Object
 		Random rand = new Random();
 		String str = "www.eplusing.com";
 		while(true){
