@@ -37,13 +37,13 @@ public class App implements CommandLineRunner {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup wokerGroup = new NioEventLoopGroup();
         try{
-            ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(bossGroup,wokerGroup);
-            bootstrap.option(ChannelOption.SO_BACKLOG, 128);
-            bootstrap.channel(NioServerSocketChannel.class);
-            bootstrap.handler(new LoggingHandler(LogLevel.INFO));
-            bootstrap.childHandler(serverInitializer);
-            ChannelFuture channelFuture = bootstrap.bind(port).sync();
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(bossGroup,wokerGroup);
+            serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);
+            serverBootstrap.channel(NioServerSocketChannel.class);
+            serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
+            serverBootstrap.childHandler(serverInitializer);
+            ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
         }finally {
             bossGroup.shutdownGracefully();
