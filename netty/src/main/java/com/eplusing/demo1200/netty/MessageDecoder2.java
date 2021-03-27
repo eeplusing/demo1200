@@ -17,42 +17,24 @@ public class MessageDecoder2 extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
 
-
-        if(in.readableBytes() < 16){
-            return;
-        }
-
         byte[] hsHeadBytes = new byte[16];
         in.readBytes(hsHeadBytes);
-        in.markReaderIndex();
-
         String hsHead = new String(hsHeadBytes, "UTF-8");
-
-       /* int hsBodyLen = Integer.parseInt(hsHead.substring(0,6));
-
+        logger.info("握手头协议长度：{}", hsHead);
+        int hsBodyLen = Integer.parseInt(hsHead.substring(0,6));
         int bizContentLen = Integer.parseInt(hsHead.substring(6));
-*/
 
-        out.add(hsHead);
-       /* int totalLen = hsBodyLen + bizContentLen;
+        int totalLen = hsBodyLen + bizContentLen;
 
-        if(in.readableBytes() < totalLen){
-            in.resetReaderIndex();
-        }else{
-            byte[] hsBodyBytes = new byte[hsBodyLen];
-            byte[] bizContentBytes = new byte[bizContentLen];
+        logger.info("beforeReset：{}", in.readableBytes());
 
-            in.readBytes(hsBodyBytes);
-            in.readBytes(bizContentBytes);
+        in.resetReaderIndex();
+        logger.info("afterReset：{}", in.readableBytes());
 
-            String hsBody = new String(hsBodyBytes, "UTF-8");
-            String bizContent = new String(bizContentBytes, "UTF-8");
-
-            logger.info(hsBody);
-            logger.info(bizContent);
-
-
-        }*/
+        if(in.readableBytes() >= totalLen+16){
+            channelHandlerContext.pipeline().remove(this);
+            return;
+        }
 
     }
 }

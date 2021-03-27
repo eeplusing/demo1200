@@ -11,7 +11,7 @@ public class Client {
     private static final Logger logger = LoggerFactory.getLogger(Client.class);
 
     public static void main(String[] args) throws IOException {
-        File srcFile = new File("D:\\opt\\jdk-15.0.2_windows-x64_bin.zip");
+        File srcFile = new File("D:\\opt\\temp.txt");
         FileInputStream fin = new FileInputStream(srcFile);
 
         byte[] bizContent = new byte[(int) srcFile.length()];
@@ -25,9 +25,9 @@ public class Client {
 
         String hsBodyReq = "abcdefghij";
 
-        String bizContentLenReq = "187986283";
+        String bizContentLenReq = "0000002830";
 
-        String handshake = "000010" + "0187986283" + hsBodyReq;
+        String handshake = "000010" + bizContentLenReq + hsBodyReq;
 
         socketOut.write(handshake.getBytes("UTF-8"));
         socketOut.flush();
@@ -50,8 +50,10 @@ public class Client {
         socketIn.read(bizContentBytes);
 
         String hsBody = new String(hsBodyBytes, "UTF-8");
+        String bizContentRsp = new String(bizContentBytes, "UTF-8");
 
-        logger.info(hsBody);
+        logger.info("收到的回复头：{}",hsBody);
+        logger.info("收到的回复文件内容：", bizContentRsp);
 
     }
 }
