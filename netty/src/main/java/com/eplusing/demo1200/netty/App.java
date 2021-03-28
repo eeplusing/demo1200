@@ -36,7 +36,8 @@ public class App implements CommandLineRunner {
         try{
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup,wokerGroup);
-            serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);
+            serverBootstrap.option(ChannelOption.SO_BACKLOG, 500);
+            serverBootstrap.option(ChannelOption.SO_TIMEOUT, 30*1000);
             serverBootstrap.channel(NioServerSocketChannel.class);
             serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
             serverBootstrap.childHandler(new NettyServerInitializer());

@@ -11,9 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -56,23 +54,91 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
         String bizContent = new String(bizContentBytes, "UTF-8");
         //logger.info("bizContent：{}", bizContent);
 
-//187986283
-        File targetFile = new File("D:\\opt\\jdk-15.0.2_windows-x64_bin.zip");
+
+        //865585638
+        File targetFile = new File("D:\\opt\\ideaIU-2020.3.2.win.zip");
         logger.info("目标文件长度：{}", targetFile.length());
         FileInputStream fosTarget = new FileInputStream(targetFile);
 
-        byte[] targetFileBytes = new byte[(int) targetFile.length()];
-        fosTarget.read(targetFileBytes);
+        //大于10M的文件需要分次读取
+        int blockSize = 10 * 1024 * 1024;
 
-        String rsp = "0000100187986283aaaaaaaaaa";
+        if (Integer.MAX_VALUE < targetFile.length()) { //超过最大传输大小
+            String rsp = "0000100865585638bbbbbbbbbb";
+            ByteBuf buf = Unpooled.buffer();
+            buf.writeBytes(rsp.getBytes("UTF-8"));
+            ctx.writeAndFlush(buf);
+        } else {
+            String rsp = "0000100865585638aaaaaaaaaa";
+            ByteBuf buf = Unpooled.buffer();
+            buf.writeBytes(rsp.getBytes("UTF-8"));
+            ctx.writeAndFlush(buf);
 
-        ByteBuf buf = Unpooled.buffer();
+            int targetFileLen = (int) targetFile.length();
+            if (targetFileLen > blockSize) {
+                int num = targetFileLen / blockSize;
+                int lastSize = targetFileLen % blockSize;
 
-        buf.writeBytes(rsp.getBytes("UTF-8"));
-        buf.writeBytes(targetFileBytes);
+                byte[] block = new byte[blockSize];
 
-        ctx.writeAndFlush(buf);
+                while (num-- > 0) {
+                    logger.info("还剩{}块", num);
+                    block = readFixLength(fosTarget, blockSize);
+                    buf = Unpooled.buffer(blockSize);
+                    buf.writeBytes(block);
+                    ctx.writeAndFlush(buf);
+                }
 
+                if (lastSize > 0) {
+                    logger.info("最后一块");
+
+                    byte[] lastBlock = new byte[lastSize];
+                    lastBlock = readFixLength(fosTarget, lastSize);
+                    buf = Unpooled.buffer(lastSize);
+                    buf.writeBytes(lastBlock);
+                    ctx.writeAndFlush(buf);
+                }
+
+
+            } else {
+
+                byte[] targetFileBytes = new byte[targetFileLen];
+                targetFileBytes = readFixLength(fosTarget, targetFileLen);
+                buf = Unpooled.buffer();
+                buf.writeBytes(targetFileBytes);
+                ctx.writeAndFlush(buf);
+
+            }
+
+
+
+
+        }
+
+
+
+    }
+
+
+
+    private byte[] readFixLength(InputStream in, int fixLength) throws IOException {
+        byte[] result = new byte[fixLength];
+        int getLen = 0;
+        int retLen = 0;
+        while (getLen < fixLength) {
+            retLen = in.read(result, getLen, fixLength - getLen);
+            if (retLen == -1) {
+                break;
+            }
+            getLen += retLen;
+        }
+
+    /*    if (getLen != fixLength) {
+            byte[] actualRecivedBytes = new byte[getLen];
+            System.arraycopy(result, 0, actualRecivedBytes, 0, getLen);
+            return actualRecivedBytes;
+        }*/
+        return result;
     }
 
     @Override

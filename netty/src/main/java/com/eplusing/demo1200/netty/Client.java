@@ -45,21 +45,53 @@ public class Client {
         logger.info("服务端回复总长度：{}", totalLen);
 
         byte[] hsBodyBytes = new byte[hsBodyLen];
-        byte[] bizContentBytes = new byte[bizContentLen];
 
         hsBodyBytes = readFixLength(socketIn, hsBodyLen);
-        bizContentBytes = readFixLength(socketIn, bizContentLen);
 
         String hsBody = new String(hsBodyBytes, "UTF-8");
-        String bizContentRsp = new String(bizContentBytes, "UTF-8");
+        //String bizContentRsp = new String(bizContentBytes, "UTF-8");
 
         logger.info("收到的回复头：{}", hsBody);
         //logger.info("收到的回复文件内容：{}", bizContentRsp);
 
-        FileOutputStream fos = new FileOutputStream("D:\\opt\\jdk-15.0.2_windows-x64_bin-download.zip");
 
-        fos.write(bizContentBytes);
-        fos.flush();
+        byte[] bizContentBytes = null;
+        FileOutputStream fos = new FileOutputStream("D:\\opt\\ideaIU-2020.3.2.win-download.zip");
+
+        //大于10M的文件需要分次读取
+        int blockSize = 10 * 1024 * 1024;
+
+        if (bizContentLen > blockSize) {
+
+            int num = bizContentLen / blockSize;
+            int lastSize = bizContentLen % blockSize;
+
+            byte[] block = new byte[blockSize];
+
+            while (num-- > 0) {
+                logger.info("还剩{}块", num);
+                block = readFixLength(socketIn, blockSize);
+                fos.write(block);
+                fos.flush();
+            }
+
+            if (lastSize > 0) {
+                logger.info("最后一块");
+
+                byte[] lastBlock = new byte[lastSize];
+                lastBlock = readFixLength(socketIn, lastSize);
+                fos.write(lastBlock);
+                fos.flush();
+            }
+
+
+        } else {
+            bizContentBytes = new byte[bizContentLen];
+            bizContentBytes = readFixLength(socketIn, bizContentLen);
+            fos.write(bizContentBytes);
+            fos.flush();
+        }
+
         fos.close();
 
         socketOut.close();
@@ -67,7 +99,6 @@ public class Client {
         socket.close();
 
     }
-
 
 
     private static byte[] readFixLength(InputStream in, int fixLength) throws IOException {
