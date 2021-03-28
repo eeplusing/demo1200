@@ -2,7 +2,6 @@ package com.eplusing.demo1200.netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -13,13 +12,14 @@ import java.io.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
-    private static final Logger logger = LoggerFactory.getLogger(NettyServerHandler.class);
+public class NettyServerHandlerPooledByteBuf extends SimpleChannelInboundHandler<ByteBuf> {
+    private static final Logger logger = LoggerFactory.getLogger(NettyServerHandlerPooledByteBuf.class);
 
     private AtomicInteger num = new AtomicInteger(0);
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+        PooledByteBufAllocator alloc = new PooledByteBufAllocator();
 
         logger.info("可读的数据长度：{}", in.readableBytes());
 
@@ -61,12 +61,12 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
         if (Integer.MAX_VALUE < targetFile.length()) { //超过最大传输大小
             String rsp = "0000100865585638bbbbbbbbbb";
-            ByteBuf buf = Unpooled.buffer();
+            ByteBuf buf = alloc.buffer();
             buf.writeBytes(rsp.getBytes("UTF-8"));
             ctx.writeAndFlush(buf);
         } else {
             String rsp = "0000100865585638aaaaaaaaaa";
-            ByteBuf buf = Unpooled.buffer();
+            ByteBuf buf = alloc.buffer();
             buf.writeBytes(rsp.getBytes("UTF-8"));
             ctx.writeAndFlush(buf);
 
@@ -79,10 +79,15 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
                 while (num-- > 0) {
                     logger.info("还剩{}块", num);
+
+
+                    // PreferHeapByteBufAllocator
+                    // PooledByteBufAllocator
                     block = readFixLength(fosTarget, blockSize);
-                    buf = Unpooled.buffer(blockSize);
-                    buf.writeBytes(block);
-                    ctx.writeAndFlush(buf);
+                    /*ByteBuf bufTemp = alloc.buffer(blockSize + 1);
+                    bufTemp.writeBytes(block);*/
+                    ctx.writeAndFlush(block);
+                    //bufTemp.release();
                 }
 
                 if (lastSize > 0) {
@@ -90,31 +95,21 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
                     byte[] lastBlock = new byte[lastSize];
                     lastBlock = readFixLength(fosTarget, lastSize);
-                    buf = Unpooled.buffer(lastSize);
-                    buf.writeBytes(lastBlock);
-                    ctx.writeAndFlush(buf);
+                    ByteBuf bufLast = alloc.buffer(lastSize + 1);
+                    bufLast.writeBytes(lastBlock);
+                    ctx.writeAndFlush(bufLast);
                 }
 
 
             } else {
-
                 byte[] targetFileBytes = new byte[targetFileLen];
                 targetFileBytes = readFixLength(fosTarget, targetFileLen);
-                buf = Unpooled.buffer();
-                buf.writeBytes(targetFileBytes);
-                ctx.writeAndFlush(buf);
-
+                ByteBuf totalBuf = alloc.buffer(targetFileLen + 1);
+                totalBuf.writeBytes(targetFileBytes);
+                ctx.writeAndFlush(totalBuf);
             }
-
-
-
-
         }
-
-
-
     }
-
 
 
     private byte[] readFixLength(InputStream in, int fixLength) throws IOException {

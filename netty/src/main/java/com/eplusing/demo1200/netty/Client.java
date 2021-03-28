@@ -105,7 +105,12 @@ public class Client {
         byte[] result = new byte[fixLength];
         int getLen = 0;
         int retLen = 0;
+
+
         while (getLen < fixLength) {
+            if(getLen > 5701631){
+                int a = getLen;
+            }
             retLen = in.read(result, getLen, fixLength - getLen);
             if (retLen == -1) {
                 break;
