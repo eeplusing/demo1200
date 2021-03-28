@@ -23,6 +23,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
     private static final Logger logger = LoggerFactory.getLogger(NettyServerHandler.class);
 
     private AtomicInteger num = new AtomicInteger(0);
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
 
@@ -38,7 +39,6 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
         byte[] hsBodyBytes = new byte[hsBodyLen];
         in.readBytes(hsBodyBytes);
-
 
 
         String hsBody = new String(hsBodyBytes, "UTF-8");
@@ -58,10 +58,10 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
 //187986283
         File targetFile = new File("D:\\opt\\jdk-15.0.2_windows-x64_bin.zip");
-        logger.info("目标文件长度：{}",targetFile.length());
+        logger.info("目标文件长度：{}", targetFile.length());
         FileInputStream fosTarget = new FileInputStream(targetFile);
 
-        byte[] targetFileBytes = new byte[(int)targetFile.length()];
+        byte[] targetFileBytes = new byte[(int) targetFile.length()];
         fosTarget.read(targetFileBytes);
 
         String rsp = "0000100187986283aaaaaaaaaa";
@@ -71,25 +71,44 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
         buf.writeBytes(rsp.getBytes("UTF-8"));
         buf.writeBytes(targetFileBytes);
 
+
+        byte b1 = targetFileBytes[(int) (targetFile.length()) - 1];
+        byte b2 = targetFileBytes[(int) (targetFile.length()) - 2];
+        byte b3 = targetFileBytes[(int) (targetFile.length()) - 3];
+
+        byte b1000 = targetFileBytes[(int) (targetFile.length()) - 1000];
+        byte b100000 = targetFileBytes[(int) (targetFile.length()) - 100000];
+
+
+        logger.info("标识位" + b1  + ","+ b2  + ","+ b3 + "," + b1000  + ","+ b100000);
+
+
+        b1 = targetFileBytes[0];
+        b2 = targetFileBytes[1];
+        b3 = targetFileBytes[50];
+
+        logger.info("client标识位" + b1 + "," + b2 + "," + b3 );
+
         ctx.writeAndFlush(buf);
 
-        ctx.close();
+        //ctx.close();
 
     }
 
-/*
+
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         logger.info("开始读取客户端请求的内容");
+        ctx.flush();
     }
-*/
 
-/*    @Override
+
+    @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         logger.info("接收客户端请求内容成功,第{}此交互", num.incrementAndGet());
         ctx.fireChannelReadComplete();
         ctx.flush();
-    }*/
+    }
 
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         logger.error("与客户端交互发生异常");

@@ -22,9 +22,6 @@ public class App implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final int port = 1800;
 
-    @Autowired
-    NettyServerInitializer serverInitializer;
-
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
         app.setWebApplicationType(WebApplicationType.NONE);
@@ -42,7 +39,7 @@ public class App implements CommandLineRunner {
             serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);
             serverBootstrap.channel(NioServerSocketChannel.class);
             serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
-            serverBootstrap.childHandler(serverInitializer);
+            serverBootstrap.childHandler(new NettyServerInitializer());
             ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
         }finally {

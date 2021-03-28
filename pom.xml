@@ -1,38 +1,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.eplusing</groupId>
-  <artifactId>demo1200</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+    <groupId>com.eplusing</groupId>
+    <artifactId>demo1200</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-<modules>
-  <module>designpattern</module>
-  <module>docker</module>
-  <module>javafeature</module>
-  <module>jvm</module>
-  <module>microservice</module>
-  <module>mvn</module>
-  <module>mybatis</module>
-  <module>rocketmq</module>
-  <module>security</module>
-  <module>leetcode</module>
-  <module>sm</module>
-    <module>base</module>
-    <module>db</module>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <modules>
+        <module>designpattern</module>
+        <module>docker</module>
+        <module>javafeature</module>
+        <module>jvm</module>
+        <module>microservice</module>
+        <module>mvn</module>
+        <module>mybatis</module>
+        <module>rocketmq</module>
+        <module>security</module>
+        <module>leetcode</module>
+        <module>sm</module>
+        <module>base</module>
+        <module>db</module>
+        <module>netty</module>
 
-</modules>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
