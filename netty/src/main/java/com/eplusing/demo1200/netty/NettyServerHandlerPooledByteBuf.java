@@ -84,8 +84,8 @@ public class NettyServerHandlerPooledByteBuf extends SimpleChannelInboundHandler
                     // PreferHeapByteBufAllocator
                     // PooledByteBufAllocator
                     block = readFixLength(fosTarget, blockSize);
-                    /*ByteBuf bufTemp = alloc.buffer(blockSize + 1);
-                    bufTemp.writeBytes(block);*/
+                    ByteBuf bufTemp = alloc.buffer(blockSize);
+                    bufTemp.writeBytes(block);
                     ctx.writeAndFlush(block);
                     //bufTemp.release();
                 }
@@ -95,7 +95,7 @@ public class NettyServerHandlerPooledByteBuf extends SimpleChannelInboundHandler
 
                     byte[] lastBlock = new byte[lastSize];
                     lastBlock = readFixLength(fosTarget, lastSize);
-                    ByteBuf bufLast = alloc.buffer(lastSize + 1);
+                    ByteBuf bufLast = alloc.buffer(lastSize);
                     bufLast.writeBytes(lastBlock);
                     ctx.writeAndFlush(bufLast);
                 }
@@ -104,7 +104,7 @@ public class NettyServerHandlerPooledByteBuf extends SimpleChannelInboundHandler
             } else {
                 byte[] targetFileBytes = new byte[targetFileLen];
                 targetFileBytes = readFixLength(fosTarget, targetFileLen);
-                ByteBuf totalBuf = alloc.buffer(targetFileLen + 1);
+                ByteBuf totalBuf = alloc.buffer(targetFileLen);
                 totalBuf.writeBytes(targetFileBytes);
                 ctx.writeAndFlush(totalBuf);
             }

@@ -25,5 +25,6 @@ public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast("bodyDecoder", new BodyDecoder());
         //pipeline.addLast("encoder", new MessageEncoder());
         pipeline.addLast("handler", new NettyServerHandler());
+        //pipeline.addLast("handler", new NettyServerHandlerPooledByteBuf());
     }
 }
