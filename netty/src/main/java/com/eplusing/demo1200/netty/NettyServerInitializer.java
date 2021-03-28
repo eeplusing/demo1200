@@ -17,11 +17,10 @@ public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
-        ChannelPipeline pipeline = ch.pipeline();
-        InetSocketAddress insocket = ch.remoteAddress();
-        String clientIp = insocket.getAddress().getHostAddress();
-        logger.info("获取客户端IP：" + clientIp);
 
+        logger.info("收到来自客户端IP={}的请求",ch.remoteAddress().getAddress().getHostAddress());
+
+        ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast("headDecoder", new HeadDecoder());
         pipeline.addLast("bodyDecoder", new BodyDecoder());
         //pipeline.addLast("encoder", new MessageEncoder());

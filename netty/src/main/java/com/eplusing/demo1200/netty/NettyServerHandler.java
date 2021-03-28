@@ -71,41 +71,26 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
         buf.writeBytes(rsp.getBytes("UTF-8"));
         buf.writeBytes(targetFileBytes);
 
-
-        byte b1 = targetFileBytes[(int) (targetFile.length()) - 1];
-        byte b2 = targetFileBytes[(int) (targetFile.length()) - 2];
-        byte b3 = targetFileBytes[(int) (targetFile.length()) - 3];
-
-        byte b1000 = targetFileBytes[(int) (targetFile.length()) - 1000];
-        byte b100000 = targetFileBytes[(int) (targetFile.length()) - 100000];
-
-
-        logger.info("标识位" + b1  + ","+ b2  + ","+ b3 + "," + b1000  + ","+ b100000);
-
-
-        b1 = targetFileBytes[0];
-        b2 = targetFileBytes[1];
-        b3 = targetFileBytes[50];
-
-        logger.info("client标识位" + b1 + "," + b2 + "," + b3 );
-
         ctx.writeAndFlush(buf);
-
-        //ctx.close();
 
     }
 
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        logger.info("开始读取客户端请求的内容");
+    }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        logger.info("开始读取客户端请求的内容");
+        logger.info("与客户端交互完成，断开与客户端的连接");
         ctx.flush();
+        ctx.close();
     }
 
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        logger.info("接收客户端请求内容成功,第{}此交互", num.incrementAndGet());
+        logger.info("第{}此交互,接收客户端指令成功,", num.incrementAndGet());
         ctx.fireChannelReadComplete();
         ctx.flush();
     }

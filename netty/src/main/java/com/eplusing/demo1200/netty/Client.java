@@ -50,27 +50,6 @@ public class Client {
         hsBodyBytes = readFixLength(socketIn, hsBodyLen);
         bizContentBytes = readFixLength(socketIn, bizContentLen);
 
-      /*  socketIn.read(hsBodyBytes);
-        socketIn.read(bizContentBytes);*/
-
-        byte b1 = bizContentBytes[bizContentLen - 1];
-        byte b2 = bizContentBytes[bizContentLen - 2];
-        byte b3 = bizContentBytes[bizContentLen - 3];
-
-        byte b1000 = bizContentBytes[bizContentLen - 1000];
-        byte b100000 = bizContentBytes[bizContentLen - 100000];
-
-
-        logger.info("client标识位" + b1 + "," + b2 + "," + b3 + "," + b1000 + "," + b100000);
-
-        b1 = bizContentBytes[0];
-         b2 = bizContentBytes[1];
-         b3 = bizContentBytes[50];
-
-        logger.info("client标识位" + b1 + "," + b2 + "," + b3 );
-
-
-
         String hsBody = new String(hsBodyBytes, "UTF-8");
         String bizContentRsp = new String(bizContentBytes, "UTF-8");
 
@@ -82,6 +61,10 @@ public class Client {
         fos.write(bizContentBytes);
         fos.flush();
         fos.close();
+
+        socketOut.close();
+        socketIn.close();
+        socket.close();
 
     }
 
