@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class NC140 {
     public static void main(String[] args) {
-        int[] arr = {5, 2, 3, 1, 4, 1000, 2, 300, 34, 2,1 ,1,0};
+        int[] arr = {5, 2, 3, 1, 4, 1000, 2, 300, 34, 2, 1, 1, 0};
 
         //new NC140().bubbleSort(arr);
 
@@ -15,7 +15,8 @@ public class NC140 {
         }
         System.out.println();
 
-        arr=new NC140().mergeSort(arr);
+        new NC140().quickSort(arr, 0, arr.length - 1);
+        //arr = new NC140().mergeSort(arr);
         //new NC140().shellSort(arr);
         //new NC140().insertSort(arr);
 
@@ -30,6 +31,42 @@ public class NC140 {
             System.out.print(arr[i] + ",");
         }
 
+    }
+
+
+    //快速排序
+    public int[] quickSort(int[] arr, int start, int end) {
+        int i = start;
+        int j = end;
+        int pivot = arr[start];
+        while (i < j) {
+            //找到小于等于基准的数1
+            while (i < j && arr[j] > pivot) {
+                j--;
+            }
+
+            //找到大于等于基准的数2
+            while (i < j && arr[i] < pivot) {
+                i++;
+            }
+            //如果这两个数1和数2相等相等则不交换,继续往右扫描，这样可以保证排序稳定
+            if (arr[i] == arr[j] && i < j) {
+                i++;
+            }else{
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        if(i-1 > start){
+            arr = quickSort(arr, start, i -1);
+        }
+        if(j + 1 < end){
+            arr = quickSort(arr, j + 1, end);
+        }
+
+        return arr;
     }
 
 
