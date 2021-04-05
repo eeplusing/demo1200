@@ -1,0 +1,44 @@
+方法一：重启才能生效，重启后永久生效
+开启：
+    chkconfig iptables on
+关闭：
+    chkconfig iptables off
+
+
+方法二：即使生效，重启后失效
+开启：
+service iptables start
+关闭：
+service iptables stop
+
+
+centos8中找不到iptables服务，使用如下命令才可以：
+1. 查看防火墙状态：
+    systemctl status firewalld.service
+
+    # systemctl status firewalld.service
+    鈼[0m firewalld.service - firewalld - dynamic firewall daemon
+       Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+       Active: active (running) since Sat 2021-04-03 03:52:23 EDT; 2h 18min ago
+         Docs: man:firewalld(1)
+     Main PID: 972 (firewalld)
+        Tasks: 2 (limit: 23500)
+       Memory: 32.0M
+       CGroup: /system.slice/firewalld.service
+               972 /usr/libexec/platform-python -s /usr/sbin/firewalld --nofork --nopid
+
+    Apr 03 03:52:23 localhost.localdomain systemd[1]: Starting firewalld - dynamic firewall daemon...
+    Apr 03 03:52:23 localhost.localdomain systemd[1]: Started firewalld - dynamic firewall daemon.
+    Apr 03 03:52:24 localhost.localdomain firewalld[972]: WARNING: AllowZoneDrifting is enabled. This is considered an insecure configuration option. It will be removed in a future release. Please consider disabling it now.
+
+2.开启防火墙：
+    systemctl start firewalld.service
+
+3.关闭防火墙:
+    systemctl stop firewalld.service
+
+4.禁用防火墙：
+   systemctl disable firewalld.service
+
+5.防火墙随系统开机启用：
+    systemctl enable firewalld.service

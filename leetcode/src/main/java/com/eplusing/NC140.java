@@ -136,8 +136,8 @@ public class NC140 {
 
         int gap = len / 2;
         while (gap > 0) {
-            int i = gap;
-            int j = gap;
+            int i = 0;
+            int j = 0;
             for (i = gap; i < len; i++) {
                 int temp = arr[i];
                 //发现比当前数小就往后移动

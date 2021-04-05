@@ -26,6 +26,8 @@
         <module>base</module>
         <module>db</module>
         <module>netty</module>
+        <module>os</module>
+        <module>redis</module>
 
     </modules>
     <dependencies>
