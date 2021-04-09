@@ -20,6 +20,29 @@ public class ConverseListNode {
 
     }
 
+    public ListNode ReverseList1(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+
+        ListNode preNode = null;
+        ListNode curNode = head;
+
+        while(curNode != null){
+           ListNode nextNode = curNode.next;
+           curNode.next = preNode;
+           preNode = curNode;
+           curNode = nextNode;
+
+        }
+
+        return preNode;
+
+
+    }
+
+
+
     public static class ListNode {
         int val;
         ListNode next = null;
@@ -41,9 +64,12 @@ public class ConverseListNode {
 
         }
 
-        new ConverseListNode().ReverseList(head);
+        ListNode newHead =  new ConverseListNode().ReverseList1(head);
+        while(newHead != null){
+            System.out.println(newHead.val + ",");
+            newHead = newHead.next;
+        }
 
-        System.out.println(head);
 
 
     }
