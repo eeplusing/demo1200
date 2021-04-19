@@ -10,7 +10,7 @@ nohup sh bin/mqnamesrv -n 127.0.0.1:9876 &
 
 # 或者加上输出日志
 nohup sh bin/mqnamesrv  >  ~/logs/rocketmqlogs/namesrv.log  &
-nohup sh bin/mqnamesrv -n 127.0.0.1:9876 >  ~/logs/rocketmqlogs/namesrv.log  &
+nohup sh /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/bin/mqnamesrv -n 127.0.0.1:9876 >  ~/logs/rocketmqlogs/namesrv.log  &
 # 停止命令
 sh bin/mqshutdown namesrv
 
@@ -18,9 +18,9 @@ sh bin/mqshutdown namesrv
 #startBroker.sh
 nohup sh bin/mqbroker -n 127.0.0.1:9876 &
 
-
+#启用参数过滤功能enablePropertyFilter=true
 #注意，下面的ip地址以及端口请填写你安装的rocketmq机器的ip地址及端口。
-nohup sh bin/mqbroker -c conf/broker.conf  -n 129.204.176.33:9876 autoCreateTopicEnable=true  >  ~/logs/rocketmqlogs/broker.log &
+nohup sh /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/bin/mqbroker -c /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/conf/broker.conf  -n  127.0.0.1:9876 autoCreateTopicEnable=true  >  ~/logs/rocketmqlogs/broker.log &
 
 sh bin/mqshutdown broker
 

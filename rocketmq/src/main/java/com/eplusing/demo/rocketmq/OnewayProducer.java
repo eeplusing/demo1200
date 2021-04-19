@@ -7,9 +7,10 @@ import org.apache.rocketmq.remoting.common.RemotingHelper;
 public class OnewayProducer {
     public static void main(String[] args) throws Exception{
         //Instantiate with a producer group name.
-        DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+        DefaultMQProducer producer = new DefaultMQProducer("onewayProducerTopicTest");
         // Specify name server addresses.
-        producer.setNamesrvAddr("129.204.176.33:9876");
+        //producer.setNamesrvAddr("129.204.176.33:9876");
+        producer.setNamesrvAddr("192.168.145.129:9876");
         //Launch the instance.
         producer.start();
         for (int i = 0; i < 10; i++) {

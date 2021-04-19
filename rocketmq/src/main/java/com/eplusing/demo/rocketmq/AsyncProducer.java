@@ -14,10 +14,11 @@ public class AsyncProducer {
         //Instantiate with a producer group name.
         DefaultMQProducer producer = new DefaultMQProducer("AsyncProducerplease_rename_unique_group_name");
         // Specify name server addresses.
-        producer.setNamesrvAddr("129.204.176.33:9876");
+        //producer.setNamesrvAddr("129.204.176.33:9876");
+        producer.setNamesrvAddr("192.168.145.129:9876");
         //Launch the instance.
         producer.start();
-        producer.setRetryTimesWhenSendAsyncFailed(0);
+        producer.setRetryTimesWhenSendAsyncFailed(3);
         
         int messageCount = 10;
         final CountDownLatch countDownLatch = new CountDownLatch(messageCount);
