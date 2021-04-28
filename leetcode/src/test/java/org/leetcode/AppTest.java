@@ -1,9 +1,7 @@
 package org.leetcode;
 
-import com.eplusing.NC140;
-import junit.framework.Test;
+import com.eplusing.NC140Sort;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Unit test for simple App.
@@ -21,7 +19,7 @@ public class AppTest
         }
         System.out.println();
 
-        new NC140().quickSort(arr, 0, arr.length - 1);
+        new NC140Sort().quickSort(arr, 0, arr.length - 1);
         //arr = new NC140().mergeSort(arr);
         //new NC140().shellSort(arr);
         //new NC140().insertSort(arr);
