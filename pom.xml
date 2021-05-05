@@ -30,5 +30,6 @@
         <module>demo1200-hystrix</module>
         <module>demo1200-eurekaserver</module>
         <module>demo1200-hystrix</module>
+
     </modules>
 </project>
