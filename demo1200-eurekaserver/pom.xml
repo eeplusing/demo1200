@@ -11,11 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.eplusing</groupId>
-<<<<<<< HEAD
     <artifactId>demo1200-eurekaserver</artifactId>
-=======
-    <artifactId>eureka-server</artifactId>
->>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
     <version>1.0.0</version>
     <packaging>jar</packaging>
 

@@ -30,9 +30,5 @@
         <module>demo1200-hystrix</module>
         <module>demo1200-eurekaserver</module>
         <module>demo1200-hystrix</module>
-<<<<<<< HEAD
-
-=======
->>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
     </modules>
 </project>
