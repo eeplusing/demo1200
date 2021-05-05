@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.meicano.mybatis.mapper.TeacherMapper">
-	<resultMap type="com.meicano.mybatis.po.Teacher" id="teacherPositionResultMap">
+<mapper namespace="com.eplusing.demo1200.mybatis.mapper.TeacherMapper">
+	<resultMap type="com.eplusing.demo1200.mybatis.po.Teacher" id="teacherPositionResultMap">
 		<id property="id" column="id"/>
 		<result property="no" column="t_no"/>
 		<result property="name" column="t_name"/>
@@ -9,7 +9,7 @@
 		<!-- property：名字
 			 javaType：类型
 		 -->
-		<association property="pos" javaType="com.meicano.mybatis.po.Position">
+		<association property="pos" javaType="com.eplusing.demo1200.mybatis.po.Position">
 			<id property="id" column="id"/>
 			<result property="name" column="t_pos_name"/>
 		</association>
@@ -25,7 +25,7 @@
 		where t.id = #{id}
 	</select>
 	
-	<resultMap type="com.meicano.mybatis.po.TeacherDetail" id="teacherDetailResultMap">
+	<resultMap type="com.eplusing.demo1200.mybatis.po.TeacherDetail" id="teacherDetailResultMap">
 		<id property="id" column="id"/>
 		<result property="no" column="t_no"/>
 		<result property="name" column="t_name"/>
@@ -35,11 +35,11 @@
 		<!-- property：名字
 			 javaType：类型
 		 -->
-		<association property="pos" javaType="com.meicano.mybatis.po.Position">
+		<association property="pos" javaType="com.eplusing.demo1200.mybatis.po.Position">
 			<id property="id" column="id"/>
 			<result property="name" column="t_pos_name"/>
 		</association>	
-		<collection property="studentList" javaType="List" ofType="com.meicano.mybatis.po.Student">
+		<collection property="studentList" javaType="List" ofType="com.eplusing.demo1200.mybatis.po.Student">
 			<result property="name" column="t_stu_name"/>
 		</collection>
 	</resultMap>

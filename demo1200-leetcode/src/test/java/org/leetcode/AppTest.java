@@ -1,6 +1,6 @@
 package org.leetcode;
 
-import com.eplusing.NC140Sort;
+import com.eplusing.demo1200.NC140Sort;
 import junit.framework.TestCase;
 
 /**

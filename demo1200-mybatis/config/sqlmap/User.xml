@@ -11,10 +11,10 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  		parameterType输入参数类型
  		resultType输出结果类型
  	-->
- 	<select id="findUserById" parameterType="int" resultType="com.meicano.mybatis.po.User">
+ 	<select id="findUserById" parameterType="int" resultType="com.eplusing.demo1200.mybatis.po.User">
  		select * from user where id = #{id}
  	</select>
- 	<select id="findUserByName" parameterType="String" resultType="com.meicano.mybatis.po.User">
+ 	<select id="findUserByName" parameterType="String" resultType="com.eplusing.demo1200.mybatis.po.User">
  		<!-- sql拼接不能防止sql注入 -->
  		<!-- select * from user where username like '%${value}%' -->
 		select * from user where username like #{username}
@@ -27,7 +27,7 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  	keyProperty:将主键设置到哪个属性
  	resultType:select LAST_INSERT_ID的结果类型
  	 -->
- 	<insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 	<insert id="insertUser" parameterType="com.eplusing.demo1200.mybatis.po.User">
  		<selectKey keyProperty="id" order="AFTER" resultType="int">
  			select LAST_INSERT_ID()
  		</selectKey>
@@ -35,7 +35,7 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  	</insert>
  	
  	<!-- 利用mysql的uuid生成主键 -->
- 	<!-- <insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 	<!-- <insert id="insertUser" parameterType="User">
  		<selectKey keyProperty="id" order="BEFORE" resultType="string">
  			select UUID();
  		</selectKey>
@@ -43,7 +43,7 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  	</insert> -->
  	
  	<!-- oracle 
- 	<insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+ 	<insert id="insertUser" parameterType="User">
  		<selectKey keyProperty="id" order="BEFORE" resultType="int">
  			select 序列名.nextval() from dual;
  		</selectKey>
@@ -51,7 +51,7 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  	</insert>
  	-->
  	<!-- 更新用户  要求传入的user对象中必须包含id-->
- 	<update id="updateUser" parameterType="com.meicano.mybatis.po.User">	
+ 	<update id="updateUser" parameterType="com.eplusing.demo1200.mybatis.po.User">
 		update user set username=#{username}, birthday=#{birthday} where id=#{id}
  	</update>
  	<!-- 删除用户 -->
