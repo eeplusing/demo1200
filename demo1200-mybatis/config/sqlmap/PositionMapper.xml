@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
 <mapper namespace="com.eplusing.demo1200.mybatis.mapper.PositionMapper">
 	<resultMap type="com.eplusing.demo1200.mybatis.po.Position" id="positionTeacherResultMap">
+=======
+<mapper namespace="com.meicano.mybatis.mapper.PositionMapper"> 
+	<resultMap type="com.meicano.mybatis.po.Position" id="positionTeacherResultMap">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 		<id property="id" column="id"/>
 		<result property="name" column="t_pos_name"/> <!-- t_name -->
 		<!-- 
@@ -11,7 +16,11 @@
 		一对多其中是放的一个集合所以这个是集合的泛型的类型，这里我们的list中放的是Teacher：
 		所以这里是Teacher。
 		 -->
+<<<<<<< HEAD
 		<collection property="teacherList" javaType="List" ofType="com.eplusing.demo1200.mybatis.po.Teacher" >
+=======
+		<collection property="teacherList" javaType="List" ofType="com.meicano.mybatis.po.Teacher" >
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 			<!-- 
 				一对多出现的问题：
 					当数据库表中，主表的主键id和明细表的 ...
@@ -81,7 +90,11 @@
 		
 	</select>
 	
+<<<<<<< HEAD
 	<resultMap type="com.eplusing.demo1200.mybatis.po.Position" id="positionStudentResultMap">
+=======
+	<resultMap type="com.meicano.mybatis.po.Position" id="positionStudentResultMap">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 		<!-- <id property="id" column="id"/> -->
 		<result property="name" column="t_pos_name"/>
 		<collection property="teacherList" javaType="List" ofType="Teacher" >

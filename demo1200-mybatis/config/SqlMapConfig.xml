@@ -53,7 +53,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 自定义别名 -->
 	<typeAliases>
 		<!--单个别名的定义  type:别名映射的类型，alias:别名 -->
+<<<<<<< HEAD
 		<!-- <typeAlias type="User" alias="user"/> -->
+=======
+		<!-- <typeAlias type="com.meicano.mybatis.po.User" alias="user"/> -->
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 		
 		<!-- 批量别名的定义,自动扫描包下的pojo,别名默认为类名（首字母大写或小写） -->
 		<package name="com.meicano.mybatis.po"/>

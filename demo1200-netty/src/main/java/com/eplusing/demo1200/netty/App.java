@@ -1,6 +1,10 @@
 package com.eplusing.demo1200.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
+<<<<<<< HEAD
+=======
+import io.netty.buffer.PooledByteBufAllocator;
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -10,6 +14,10 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;

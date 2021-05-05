@@ -2,8 +2,13 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
  <mapper namespace="com.eplusing.demo1200.mybatis.mapper.OrdersCustomMapper">
  	<resultMap type="com.eplusing.demo1200.mybatis.po.Orders" id="orderUserResultMap">
+=======
+ <mapper namespace="com.meicano.mybatis.mapper.OrdersCustomMapper">
+ 	<resultMap type="com.meicano.mybatis.po.Orders" id="orderUserResultMap">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
  		<!-- 配置映射订单信息 -->
  		<id column="id" property="id"></id>
  		<result column="user_id" property="userId"/>
@@ -24,7 +29,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		</association>
  	</resultMap>
  
+<<<<<<< HEAD
  	<resultMap type="com.eplusing.demo1200.mybatis.po.Orders" id="orderDetailResultMap" extends="orderUserResultMap">
+=======
+ 	<resultMap type="com.meicano.mybatis.po.Orders" id="orderDetailResultMap" extends="orderUserResultMap">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
  		<!-- 配置映射订单信息 -->
  		
  		<!-- 配置映射用户信息 -->
@@ -34,7 +43,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			collection：将关联查询到的多个用户映射到集合对象中
  			ofType:指定映射到集合属性中的pojo类型
  		-->
+<<<<<<< HEAD
  		<collection property="orderDetails" ofType="com.eplusing.demo1200.mybatis.po.OrderDetail">
+=======
+ 		<collection property="orderDetails" ofType="com.meicano.mybatis.po.OrderDetail">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
  			<id column="orderdetail_id" property="id"></id>
  			<result column="items_id" property="itemsId"/>
  			<result column="items_num" property="itemsNum"/>

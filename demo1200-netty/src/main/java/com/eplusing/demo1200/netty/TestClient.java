@@ -6,6 +6,10 @@ import io.netty.channel.Channel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.example.haproxy.HAProxyHandler;
+<<<<<<< HEAD
+=======
+import io.netty.example.haproxy.HAProxyServer;
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 import io.netty.handler.codec.haproxy.HAProxyCommand;
 import io.netty.handler.codec.haproxy.HAProxyMessage;
 import io.netty.handler.codec.haproxy.HAProxyProtocolVersion;

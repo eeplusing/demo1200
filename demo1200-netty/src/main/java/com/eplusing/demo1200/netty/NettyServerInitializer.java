@@ -5,8 +5,17 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
 import org.springframework.stereotype.Component;
 
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.net.InetSocketAddress;
+
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 @Component
 public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
     private static final Logger logger = LoggerFactory.getLogger(NettyServerInitializer.class);

@@ -7,7 +7,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 mapper代理开发方式规则:
  -->
 <!-- 1.mapper代理开发时将namespace指定为mapper接口的全限定名, 将UserMapper.java与UserMapper.xml关联-->
+<<<<<<< HEAD
  <mapper namespace="com.eplusing.demo1200.mybatis.mapper.UserMapper">
+=======
+ <mapper namespace="com.meicano.mybatis.mapper.UserMapper">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
  
  	<!-- 定义resultMap 
  		type:resultMap最终对应的java类型，可以使用别名 
@@ -37,7 +41,11 @@ mapper代理开发方式规则:
  		<result column="birthday" property="birthday"/>
  		
  		<!-- 订单信息 一个用户对应多个订单使用collection映射 -->
+<<<<<<< HEAD
  		<collection property="ordersList" ofType="com.eplusing.demo1200.mybatis.po.Orders">
+=======
+ 		<collection property="ordersList" ofType="com.meicano.mybatis.po.Orders">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
  			<id column="id" property="id"/>
  			<result column="user_id" property="userId"/>
  			<result column="number" property="number"/>
@@ -189,7 +197,11 @@ mapper代理开发方式规则:
  	</insert>
  	
  	<!-- 利用mysql的uuid生成主键 -->
+<<<<<<< HEAD
  	<!-- <insert id="insertUser" parameterType="User">
+=======
+ 	<!-- <insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
  		<selectKey keyProperty="id" order="BEFORE" resultType="string">
  			select UUID();
  		</selectKey>
@@ -197,7 +209,11 @@ mapper代理开发方式规则:
  	</insert> -->
  	
  	<!-- oracle 
+<<<<<<< HEAD
  	<insert id="insertUser" parameterType="User">
+=======
+ 	<insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
+>>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
  		<selectKey keyProperty="id" order="BEFORE" resultType="int">
  			select 序列名.nextval() from dual;
  		</selectKey>
