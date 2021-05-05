@@ -6,36 +6,29 @@
     <artifactId>demo1200</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-
-
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
-        <module>designpattern</module>
-        <module>docker</module>
-        <module>javafeature</module>
-        <module>jvm</module>
-        <module>microservice</module>
-        <module>mvn</module>
-        <module>mybatis</module>
-        <module>rocketmq</module>
-        <module>security</module>
-        <module>leetcode</module>
-        <module>sm</module>
-        <module>base</module>
-        <module>db</module>
-        <module>netty</module>
-        <module>os</module>
-        <module>redis</module>
-
+        <module>demo1200-designpattern</module>
+        <module>demo1200-docker</module>
+        <module>demo1200-javafeature</module>
+        <module>demo1200-jvm</module>
+        <module>demo1200-microservice</module>
+        <module>demo1200-mvn</module>
+        <module>demo1200-mybatis</module>
+        <module>demo1200-rocketmq</module>
+        <module>demo1200-security</module>
+        <module>demo1200-leetcode</module>
+        <module>demo1200-sm</module>
+        <module>demo1200-base</module>
+        <module>demo1200-db</module>
+        <module>demo1200-netty</module>
+        <module>demo1200-os</module>
+        <module>demo1200-redis</module>
+        <module>demo1200-hystrix</module>
+        <module>demo1200-eurekaserver</module>
+        <module>demo1200-hystrix</module>
     </modules>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

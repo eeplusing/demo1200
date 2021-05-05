@@ -1,0 +1,98 @@
+
+
+1. vi my.cnf
+[mysqld]
+pid_file                           = /var/run/mysqld/mysqld.pid
+socket                             = /var/run/mysqld/mysqld.sock
+datadir                            = /var/lib/mysql
+secure-file-priv= NULL
+log_error                          = /var/log/mysql/error.log
+# Custom config should go here
+server_id                          = 1371526999
+character_set_server               = utf8mb4
+collation_server                   = utf8mb4_unicode_ci
+port                               = 3306
+transaction_isolation              = READ-COMMITTED
+max_connections                    = 1000
+
+
+
+
+
+2. 启动
+docker run -p 3306:3306 --name mysql \
+-i -t --privileged=true \
+-v /usr/local/docker/mysql/conf:/etc/mysql \
+-v /usr/local/docker/mysql/logs:/var/log/mysql \
+-v /usr/local/docker/mysql/data/mysql:/var/lib/mysql \
+-v /usr/local/docker/mysql/data/mysql-files:/var/lib/mysql-files \
+-e MYSQL_ROOT_PASSWORD=150906cpp \
+-d mysql:8.0.22
+
+3.启动报错
+[root@VM_0_9_centos conf]# docker logs cassmysql 
+2020-11-08 14:01:52+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.22-1debian10 started.
+2020-11-08 14:01:52+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2020-11-08 14:01:52+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.22-1debian10 started.
+2020-11-08 14:01:52+00:00 [Note] [Entrypoint]: Initializing database files
+2020-11-08T14:01:52.841093Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.22) initializing of server in progress as process 41
+2020-11-08T14:01:52.845203Z 0 [ERROR] [MY-010187] [Server] Could not open file '/var/log/mysql/error.log' for error logging: Permission denied
+2020-11-08T14:01:52.845238Z 0 [ERROR] [MY-013236] [Server] The designated data directory /var/lib/mysql/ is unusable. You can remove all files that the server added to it.
+2020-11-08T14:01:52.845243Z 0 [ERROR] [MY-010119] [Server] Aborting
+2020-11-08T14:01:52.845341Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.22)  MySQL Community Server - GPL.
+
+    原因：
+        centos7中安全模块selinux把权限禁掉了。
+    有三种方法解决：
+        1.在运行时加 --privileged=true 
+            [daniu@localhost tomcat]$ docker run -d -p 9091:8080 -v /home/daniu/docker/tomcat/webapps/:/usr/local/tomcat/webapps/ --privileged=true --name managertomcat xuhaixing/mytomcat
+            c512137b74f3366da73ff80fc1fd232cc76c95b52a4bab01f1f5d89d28185b28
+            [daniu@localhost tomcat]$ ls
+            
+        2.临时关闭selinux然后再打开
+            [daniu@localhost tomcat]# setenforce 0
+            [daniu@localhost tomcat]# setenforce 1
+            
+        3.添加linux规则，把要挂载的目录添加到selinux白名单
+            # 更改安全性文本的格式如下
+            chcon [-R] [-t type] [-u user] [-r role] 文件或者目录
+            
+        4.把映射的目录权限放大 改成766
+            选顷不参数： 
+            -R  ：该目录下的所有目录也同时修改； 
+            -t  ：后面接安全性本文的类型字段，例如 httpd_sys_content_t ； 
+            -u  ：后面接身份识别，例如 system_u； 
+            -r  ：后面街觇色，例如 system_r
+            执行：
+            chcon -Rt svirt_sandbox_file_t /home/daniu/docker/tomcat/webapps/
+            
+  解决方法：
+ 使用方案1.
+  
+  
+  
+  
+  
+4.navicat远程登陆提示认证失败，更新客户端，
+解决方法：重置密码 WITH mysql_native_password
+mysql> select host,user from user; 
++-----------+------------------+
+| host      | user             |
++-----------+------------------+
+| %         | root             |
+| localhost | mysql.infoschema |
+| localhost | mysql.session    |
+| localhost | mysql.sys        |
+| localhost | root             |
++-----------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '150906cpp';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '150906cpp';         
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+  
+

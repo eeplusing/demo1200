@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meicano.mybatis.mapper.PositionMapper"> 
+	<resultMap type="com.meicano.mybatis.po.Position" id="positionTeacherResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="t_pos_name"/> <!-- t_name -->
+		<!-- 
+		property同association中的一样是属性名称(javaBean中的)；
+		javaType也同association中的是类型，
+		最后多了一个OfType，因为一对多，不像一对一是单个的！我们这里是List集合，list和List都可以。
+		一对多其中是放的一个集合所以这个是集合的泛型的类型，这里我们的list中放的是Teacher：
+		所以这里是Teacher。
+		 -->
+		<collection property="teacherList" javaType="List" ofType="com.meicano.mybatis.po.Teacher" >
+			<!-- 
+				一对多出现的问题：
+					当数据库表中，主表的主键id和明细表的 ...
+					当表中的字段名相同时怎么办？多表联查？
+					
+					注意：Mybatis中做多表联查的时候，不管是
+					一对一、一对多、一对多对多：多对多：
+					都不能有字段重名的情况：不管是主键还是普通字段。
+					一旦字段重名的话，就会造成数据少自动赋值，或者覆盖，甚至重复赋值！
+					规避和解决此类问题的方法：
+						1.尽量不要表间重名，mybatis里处理起来很麻烦！id和普通字段都是。
+						但是在表多的时候，很难不会出现字段重名的情况。主键id最容易重名！
+						那么就要用以下的办法了！
+						
+						2.在mybatis中写原生SQL进行查询的时候，查的字段尽可能的少，这
+						也影响速率，强烈禁止使用*，用多少查多少！这样也能及时发现字段重
+						名的情况！
+						
+						3.最后如果真的需要查出重名的字段，并且修改数据库字段名造成的更改
+						过大，这里推荐的方式是给字段取别名，在写resultMap映射的时候，其
+						中的column属性就填写SQL语句中查出字段取的别名，这样就能解决重复
+						问题了！
+			 -->
+			<id property="id" column="t_id"/>
+			<result property="no" column="t_no"/>
+			<result property="name" column="t_name"/>	
+		</collection>
+	</resultMap>
+	
+	<select id="queryPositionTeacherResultMapById" resultMap="positionTeacherResultMap" 
+		parameterType="Integer">
+		<!-- 
+		SELECT *
+		FROM tb_position p
+		LEFT JOIN tb_teacher t
+		ON p.id = t.position_id
+		WHERE p.id = #{id}
+		-->
+		
+		SELECT 
+		p.*, 
+		t.id t_id,
+		t.t_name,
+		t.t_no
+		FROM tb_position p
+		LEFT JOIN tb_teacher t
+		ON p.id = t.position_id
+		WHERE p.id = #{id}
+	</select>
+	
+	<select id="queryPositionTeacherResultMap" resultMap="positionTeacherResultMap" >
+		<!-- 
+		SELECT *
+		FROM tb_position p
+		LEFT JOIN tb_teacher t
+		ON p.id = t.position_id
+		-->
+		
+		SELECT 
+		p.*, 
+		t.id t_id,
+		t.t_name,
+		t.t_no
+		FROM tb_position p
+		LEFT JOIN tb_teacher t
+		ON p.id = t.position_id
+		
+	</select>
+	
+	<resultMap type="com.meicano.mybatis.po.Position" id="positionStudentResultMap">
+		<!-- <id property="id" column="id"/> -->
+		<result property="name" column="t_pos_name"/>
+		<collection property="teacherList" javaType="List" ofType="Teacher" >
+			<result property="name" column="t_name"/>	
+			<collection property="studentList" javaType="List" ofType="Student">
+				<result property="name" column="t_stu_name"/>
+			</collection>
+		</collection>
+	</resultMap>
+	
+	<select id="selectPositionStudentByPosId" resultMap="positionStudentResultMap" parameterType="Integer">
+		SELECT p.t_pos_name, t.t_name, s.t_stu_name
+		FROM tb_position p
+		INNER JOIN tb_teacher t ON p.id = t.position_id
+		LEFT JOIN tb_stu_teach st ON st.t_teach_id = t.id
+		LEFT JOIN tb_student s ON s.id = st.t_stu_id
+		WHERE p.id = #{id}
+	</select>
+</mapper>

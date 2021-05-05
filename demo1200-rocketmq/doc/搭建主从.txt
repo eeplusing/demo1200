@@ -1,0 +1,53 @@
+
+机器：192.168.145.129
+cd /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release
+
+# 1.先启动mqnamesrv
+nohup sh bin/mqnamesrv -n 192.168.145.129:9876  &
+
+# 2.启动master1 broker
+nohup sh  bin/mqbroker -c /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/conf/2m-2s-async/broker-a.properties &
+
+# 3.启动slave2 broker
+nohup sh  bin/mqbroker -c /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/conf/2m-2s-async/broker-b-s.properties &
+
+
+
+机器：192.168.145.130
+cd /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release
+
+# 1.先启动mqnamesrv
+nohup sh bin/mqnamesrv -n 192.168.145.130:9876 &
+
+# 2.启动master2 broker
+nohup sh bin/mqbroker -c /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/conf/2m-2s-async/broker-b.properties &
+
+# 3.启动slave1 broker
+nohup sh bin/mqbroker -c /usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/conf/2m-2s-async/broker-a-s.properties &
+
+
+sh bin/mqadmin clusterList -n 192.168.145.129:9876;192.168.145.130:9876
+namesrvAddr=192.168.145.129:9876;192.168.145.130:9876
+
+
+
+mkdir -p /usr/local/rocketmq/slave/store
+mkdir -p /usr/local/rocketmq/slave/store/commitlog
+mkdir -p /usr/local/rocketmq/slave/store/consumequeue
+mkdir -p /usr/local/rocketmq/slave/store/index
+mkdir -p /usr/local/rocketmq/slave/store/checkpoint
+mkdir -p /usr/local/rocketmq/slave/store/abort
+
+mkdir -p /usr/local/rocketmq/master/store
+mkdir -p /usr/local/rocketmq/master/store/commitlog
+mkdir -p /usr/local/rocketmq/master/store/consumequeue
+mkdir -p /usr/local/rocketmq/master/store/index
+mkdir -p /usr/local/rocketmq/master/store/checkpoint
+mkdir -p /usr/local/rocketmq/master/store/abort
+
+
+root        2029    2026  0 09:19 pts/0    00:00:02 /usr/local/jdk/jdk1.8.0_281/bin/java -server -Xms512m -Xmx512m -Xmn256m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m -XX:+UseConcMarkSweepGC -XX:+UseCMSCompactAtFullCollection -XX:CMSInitiatingOccupancyFraction=70 -XX:+CMSParallelRemarkEnabled -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+CMSClassUnloadingEnabled -XX:SurvivorRatio=8 -XX:-UseParNewGC -verbose:gc -Xloggc:/dev/shm/rmq_srv_gc_%p_%t.log -XX:+PrintGCDetails -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=30m -XX:-OmitStackTraceInFastThrow -XX:-UseLargePages -Djava.ext.dirs=/usr/local/jdk/jdk1.8.0_281/jre/lib/ext:/usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/bin/../lib:/usr/local/jdk/jdk1.8.0_281/lib/ext -cp .:/usr/local/rocketmq/rocketmq-all-4.7.1-bin-release/bin/../conf: org.apache.rocketmq.namesrv.NamesrvStartup -n 127.0.0.1:9876
+root        2097    1495  0 09:24 pts/0    00:00:00 grep --color=auto java
+
+sh bin/mqshutdown namesrv
+sh bin/mqshutdown broker
