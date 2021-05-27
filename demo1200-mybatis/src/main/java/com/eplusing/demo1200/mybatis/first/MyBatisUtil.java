@@ -14,7 +14,6 @@ private static SqlSessionFactory sqlSessionFactory = null;
 	
 	static {
 		String resource = "sqlMapConfig.xml";
-		// ����Ҫ���غ��������ļ�����classpath�¿�ʼ�ҡ�
 		InputStream in;
 		try {
 			in = Resources.getResourceAsStream(resource);
