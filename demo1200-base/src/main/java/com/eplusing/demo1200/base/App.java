@@ -42,7 +42,7 @@ public class App {
      * */
 
 
-    public Boolean transfer(String srcAccout, String destAccount, BigDecimal ammount) {
+    public boolean transfer(String srcAccout, String destAccount, BigDecimal ammount) {/*
         //1.查询本方账户可用余额
 
         if (balance.compareTo(ammount) > 0) {
@@ -94,8 +94,10 @@ public class App {
         }
 
 
+        return true;*/
+
         return true;
-        }
+    }
 
 
 
@@ -104,58 +106,58 @@ public class App {
 
 
 
-        /*
-         *  问题：TopN算法，百亿整数分布在100个文件，如何找到前1000出现次数最多的数？
-         *  写出思路即可
-         * */
-        *
-        *
-        *
-        *1.先将100各文件，遍历一遍，进行内容的重新分割
-        **2.对每个文件里的数字进行hash,这样将同一个数据分割到同一个文件中，得到重新编制后的100各文件
-        **3.从第二不得到的文件可以保证，不同的文件中不会出现存储相同的整数
-        **4.这100各小文件可以单独进行处理，统计每个该文件内的数字
-        **5.找出每个小文件中个数top1000的整数，快排
-        **6.再把100个top1000找出结果
-        **
-        *
-        *
-        **/
+    /*
+     *  问题：TopN算法，百亿整数分布在100个文件，如何找到前1000出现次数最多的数？
+     *  写出思路即可
+     *
+     *
+     *
+     *
+     *1.先将100各文件，遍历一遍，进行内容的重新分割
+     **2.对每个文件里的数字进行hash,这样将同一个数据分割到同一个文件中，得到重新编制后的100各文件
+     **3.从第二不得到的文件可以保证，不同的文件中不会出现存储相同的整数
+     **4.这100各小文件可以单独进行处理，统计每个该文件内的数字
+     **5.找出每个小文件中个数top1000的整数，快排
+     **6.再把100个top1000找出结果
+     **
+     *
+     *
+     **/
 
 
-public Boolean transfer(String srcAccout,String destAccount,BigDecimal ammount){
+    public Boolean transfer1(String srcAccout, String destAccount, BigDecimal ammount) {/*
         //1.查询本方账户可用余额
-        if(balance.compareTo(ammount)>0){
-synchronized (this){
-        //BigDecimal balance =  query(srcAccout);
-        //BigDecimal balance =  query(srcAccout);
-        BigDecimal srcBalance=new BigDecimal(10000);//假设查到的可用余额10000
-        BigDecimal destBalance=new BigDecimal(10000);//假设查到的可用余额10000
+        if (balance.compareTo(ammount) > 0) {
+            synchronized (this) {
+                //BigDecimal balance =  query(srcAccout);
+                //BigDecimal balance =  query(srcAccout);
+                BigDecimal srcBalance = new BigDecimal(10000);//假设查到的可用余额10000
+                BigDecimal destBalance = new BigDecimal(10000);//假设查到的可用余额10000
 
 
-        try{
-        //本方账户减金额
-        balance.subtract(ammount);
-        //减异常，返回false
+                try {
+                    //本方账户减金额
+                    balance.subtract(ammount);
+                    //减异常，返回false
 
-        //对方账户加金额
-        destBalance.add(ammount);
-        //加异常返回false
-        }catch(Exception e){
+                    //对方账户加金额
+                    destBalance.add(ammount);
+                    //加异常返回false
+                } catch (Exception e) {
 
-        //check srcAccout  destAccount balance
-        //throw
-        //BusinessException();
+                    //check srcAccout  destAccount balance
+                    //throw
+                    //BusinessException();
+                }
+
+            }
+        } else {
+            return false;
         }
 
-        }
-        }else{
-        return false;
-        }
-
-
+*/
         return true;
-        }
+    }
 
 
-        }
+}
