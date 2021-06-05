@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/jee
+          https://www.springframework.org/schema/util/spring-jee.xsd">
+
+    <!--
+    在容器(如JBoss,WebSphere,WebLogic,GlassFish)中添加数据配置的使用场景，
+    需要在应用程序描述符文件中添加资源引用 resource-ref
+
+    如，WEB-INF/web.xml
+    <web-app>
+        <resources-ref>
+            <res-ref-name>jdbc/musicdb</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+        </resources-ref>
+    </web-app>
+    -->
+
+    <!--spring2.5以前配置-->
+    <!--    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"
+              p:jndiName="java:comp/env/jdbc/musicdb"/>-->
+
+    <!--spring2.5及后续版本配置-->
+    <jee:jndi-lookup jndi-name="java:comp/env/jdbc/musicdb"/>
+
+
+</beans>

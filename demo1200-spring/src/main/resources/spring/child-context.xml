@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="song1"
+          class="com.eplusing.prospring5.ch3.Song"
+          p:title-ref="parentTitle"/>
+    <bean id="song2"
+          class="com.eplusing.prospring5.ch3.Song"
+          p:title-ref="childTitle"/>
+    <bean id="song3"
+          class="com.eplusing.prospring5.ch3.Song">
+        <property name="title">
+            <ref parent="childTitle"></ref>
+        </property>
+    </bean>
+
+
+    <bean id="childTitle"
+          class="java.lang.String"
+          c:0="no such Thing"/>
+
+
+</beans>

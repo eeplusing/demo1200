@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="com.eplusing.prospring5.ch3.annotation">
+        <context:exclude-filter type="assignable" expression="com.eplusing.prospring5.ch3.annotation.NotAService"/>
+    </context:component-scan>
+
+    <util:map id="map" map-class="java.util.HashMap">
+        <entry key="someValue" value="It's a happy day"/>
+        <entry key="someBean" value-ref="lyricHolder"/>
+    </util:map>
+    <util:properties id="props">
+        <prop key="firstName">John</prop>
+        <prop key="secondName">Mayer</prop>
+    </util:properties>
+    <util:set id="set" set-class="java.util.HashSet">
+        <value>I can't believe I get to see you face</value>
+        <ref  bean="lyricHolder"/>
+    </util:set>
+    <util:list id="list" list-class="java.util.ArrayList">
+        <value>I can't believe I get to see you face</value>
+        <ref  bean="lyricHolder"/>
+    </util:list>
+
+    <!--  <bean id="messageProvider"
+            class="com.eplusing.prospring5.ch3.xml.ConfigurableMessageProvider">
+          <constructor-arg value="the message from ch3.xml.ConfigurableMessageProvider"/>
+      </bean>-->
+    <bean id="messageProvider"
+          class="com.eplusing.prospring5.ch3.xml.ConfigurableMessageProvider"
+          c:message="the message from ch3.xml.ConfigurableMessageProvider">
+    </bean>
+
+    <bean id="message"
+          class="java.lang.String"
+          c:_0="I hope that someone gets my message in a bottle">
+    </bean>
+
+    <context:annotation-config/>
+    <bean id="singerOne" class="com.eplusing.prospring5.ch4.SingerWithJSR250"
+          p:age="28" p:name="Lily"/>
+    <bean id="singerTwo" class="com.eplusing.prospring5.ch4.SingerWithJSR250"
+          p:age="18" />
+    <bean id="singerThree" class="com.eplusing.prospring5.ch4.SingerWithJSR250"
+          p:name="XUANXUAN" p:age="18" />
+
+    <bean id="shutdownHook" class="com.eplusing.prospring5.ch4.ShutdownHookBean"/>
+    <bean id="destructiveBean" class="com.eplusing.prospring5.ch4.DestructiveBeanWithInterface"
+          p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.separator']}test.txt"
+    />
+
+</beans>

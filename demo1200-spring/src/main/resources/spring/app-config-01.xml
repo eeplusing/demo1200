@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/util
+          http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer"
+          p:propertyEditorRegistrars-ref="propertyEditorRegisrarsList"/>
+    <util:list id="propertyEditorRegisrarsList">
+        <bean class="com.eplusing.prospring5.ch4.PropertyEditorBean$CustomPropertyEditorRegistar"/>
+    </util:list>
+
+    <bean id="builtInSample" class="com.eplusing.prospring5.ch4.PropertyEditorBean"
+          p:character="A"
+          p:bytes="AGC FV"
+          p:cls="java.lang.String"
+          p:trueOrFalse="true"
+          p:stringList-ref="stringList"
+          p:floatValue="123.23"
+          p:date="05/01/20"
+          p:locale="zh_CN"
+          p:pattern="a*b"
+          p:file="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.separator']}test.txt"
+          p:properties="name=xuanxuan age=5"
+          p:trimString="String need trimming"
+          p:url="http://spring.io"
+    />
+    <util:list id="stringList">
+        <value>string1</value>
+        <value>string2</value>
+    </util:list>
+
+</beans>

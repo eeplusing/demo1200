@@ -6,10 +6,7 @@
     <artifactId>demo1200</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+
     <modules>
         <module>demo1200-designpattern</module>
         <module>demo1200-docker</module>
@@ -30,5 +27,6 @@
         <module>demo1200-hystrix</module>
         <module>demo1200-eurekaserver</module>
         <module>demo1200-hystrix</module>
+        <module>demo1200-spring</module>
     </modules>
 </project>

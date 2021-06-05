@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--不覆盖-->
+    <!--<context:property-placeholder location="classpath:application.properties"/>-->
+    <!--应用变量覆盖系统变量-->
+    <context:property-placeholder local-override="true" location="classpath:application.properties"/>
+    <bean id="appProperty" class="com.eplusing.prospring5.ch4.AppProperty"
+          p:applicationHome="${application.home}"
+          p:userHome="${user.home}"/>
+
+
+    <bean id="provider"
+          class="com.eplusing.prospring5.ch2.decoupled.HelloWorldMessageProvider">
+    </bean>
+
+    <bean id="renderer"
+          class="com.eplusing.prospring5.ch2.decoupled.StandardOutMessageRenderer"
+          p:messageProvider-ref="provider">
+        <!--<property name="messageProvider" ref="provider"/>-->
+    </bean>
+
+    <bean id="constructorConfusion" class="com.eplusing.prospring5.ch3.xml.ConstructorConfusion">
+        <constructor-arg type="int">
+            <value>90</value>
+        </constructor-arg>
+    </bean>
+
+    <!--   <bean id="injectSimple" class="com.eplusing.prospring5.ch3.xml.InjectSimpleSpel">
+           <property name="age" value="33"/>
+           <property name="name" value="xiaoer"/>
+           <property name="height" value="33"/>
+           <property name="programmer" value="false"/>
+           <property name="ageInSeconds" value="12456898"/>
+       </bean>-->
+    <bean id="injectSimpleConfig" class="com.eplusing.prospring5.ch3.xml.InjectSimpleConfig"/>
+    <bean id="injectSimple" class="com.eplusing.prospring5.ch3.xml.InjectSimpleSpel"
+          p:age="#{injectSimpleConfig.age + 1}"
+          p:name="#{injectSimpleConfig.name}"
+          p:height="#{injectSimpleConfig.height}"
+          p:programmer="#{injectSimpleConfig.programmer}"
+          p:ageInSeconds="#{injectSimpleConfig.ageInSeconds}"/>
+
+    <bean id="oracle" name="wiseworm" class="com.eplusing.prospring5.ch3.BookwormOracle"/>
+
+    <bean id="injectRef" class="com.eplusing.prospring5.ch3.xml.InjectRef">
+        <property name="oracle">
+            <ref bean="wiseworm"/>
+            <!--<ref bean="oracle"/>-->
+        </property>
+    </bean>
+
+    <bean id="lyricHolder" class="com.eplusing.prospring5.ch3.xml.LyricHolder"/>
+
+    <bean id="injectCollection" class="com.eplusing.prospring5.ch3.xml.CollectionInjection">
+        <property name="map">
+            <map>
+                <entry key="someValue">
+                    <value>It's a happy day</value>
+                </entry>
+                <entry key="someBean">
+                    <ref bean="lyricHolder"></ref>
+                </entry>
+            </map>
+        </property>
+        <property name="props">
+            <props>
+                <prop key="firstName">John</prop>
+                <prop key="secondName">Mayer</prop>
+            </props>
+        </property>
+        <property name="set">
+            <set>
+                <value>I can't believe I get to see you face</value>
+                <ref bean="lyricHolder"/>
+            </set>
+        </property>
+        <property name="list">
+            <list>
+                <value>I can't believe I get to see you face</value>
+                <ref bean="lyricHolder"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="singer" class="com.eplusing.prospring5.ch3.Singer" scope="prototype"/>
+    <bean id="abstractLookupBean" class="com.eplusing.prospring5.ch3.AbstractLookupDemoBean">
+        <lookup-method name="getMySinger" bean="singer"/>
+    </bean>
+    <bean id="standardLookupBean" class="com.eplusing.prospring5.ch3.StandardLookupDemoBean">
+        <property name="mySinger" ref="singer"/>
+    </bean>
+
+    <bean id="methodReplacer" class="com.eplusing.prospring5.ch3.FormatMessageReplacer"/>
+    <bean id="replacementTarget" class="com.eplusing.prospring5.ch3.ReplacementTarget">
+        <replaced-method name="formatMessage" replacer="methodReplacer">
+            <arg-type>String</arg-type>
+        </replaced-method>
+    </bean>
+    <bean id="standardTarget" class="com.eplusing.prospring5.ch3.ReplacementTarget"/>
+
+    <bean id="nonSingleton" class="com.eplusing.prospring5.ch3.annotation.Singer2" scope="prototype"
+          c:_0="John Mayer">
+    </bean>
+
+    <bean id="parentStu" class="com.eplusing.prospring5.ch3.xml.Student"
+          p:name="eplusing" p:age="28"/>
+
+    <bean id="childStu" class="com.eplusing.prospring5.ch3.xml.Student"
+          parent="parentStu" p:age="18"/>
+
+    <!--   <bean id="singerOne" class="com.eplusing.prospring5.ch4.Singer"
+       init-method="init" p:age="28" p:name="Lily"/>
+
+       <bean id="singerTwo" class="com.eplusing.prospring5.ch4.Singer"
+             init-method="init" p:age="18" />
+
+       <bean id="singerThree" class="com.eplusing.prospring5.ch4.Singer"
+             init-method="init" p:name="XUANXUAN"/>  -->
+    <bean id="singerOne" class="com.eplusing.prospring5.ch4.SingerWithInterface"
+          p:age="28" p:name="Lily"/>
+
+    <bean id="singerTwo" class="com.eplusing.prospring5.ch4.SingerWithInterface"
+          p:age="18"/>
+
+    <bean id="singerThree" class="com.eplusing.prospring5.ch4.SingerWithInterface"
+          p:name="XUANXUAN" p:age="5"/>
+
+    <bean id="destructiveBean" class="com.eplusing.prospring5.ch4.DestructiveBean"
+          destroy-method="destory"
+          p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.separator']}test.txt"
+    />
+
+    <bean id="destructiveBeanWithInterface" class="com.eplusing.prospring5.ch4.DestructiveBeanWithInterface"
+          p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.separator']}test.txt"
+    />
+    <bean id="destructiveBeanWithJSR250" class="com.eplusing.prospring5.ch4.DestructiveBeanWithJSR250"
+          p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.separator']}test.txt"
+    />
+
+    <bean id="johnMayer" class="com.eplusing.prospring5.ch4.NamedSinger"/>
+
+    <bean id="shaDigest" class="com.eplusing.prospring5.ch4.MessageDigestFactoryBean"
+          p:algorithmName="SHA1"/>
+    <bean id="defaultDigest" class="com.eplusing.prospring5.ch4.MessageDigestFactoryBean"/>
+    <bean id="digester" class="com.eplusing.prospring5.ch4.MessageDigester"
+          p:digest1-ref="shaDigest"
+          p:digest2-ref="defaultDigest"/>
+
+    <bean id="shaDigestFactory" class="com.eplusing.prospring5.ch4.MessageDigestFactory"
+          p:algorithmName="SHA1"/>
+
+    <bean id="defaultDigestFactory" class="com.eplusing.prospring5.ch4.MessageDigestFactory"/>
+
+    <bean id="shaDigest2"
+          factory-bean="shaDigestFactory"
+          factory-method="createInstance"/>
+    <bean id="defaultDigest2"
+          factory-bean="defaultDigestFactory"
+          factory-method="createInstance"/>
+
+    <bean id="digester2" class="com.eplusing.prospring5.ch4.MessageDigester"
+          p:digest1-ref="shaDigest2"
+          p:digest2-ref="defaultDigest2"/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
+          p:basenames-ref="basenames"/>
+    <util:list id="basenames">
+        <value>buttons</value>
+        <value>labels</value>
+    </util:list>
+
+    <bean id="publisher" class="com.eplusing.prospring5.ch4.Publisher"/>
+    <bean id="messageEventListener" class="com.eplusing.prospring5.ch4.MessageEventListener"/>
+
+    <bean id="johnMayer5" class="com.eplusing.prospring5.ch5.GrammyGuitarist"/>
+    <bean id="advice" class="com.eplusing.prospring5.ch5.AuditAdvice"/>
+
+    <bean id="documentsristOne" class="com.eplusing.prospring5.ch5.Documentarist"
+          p:guitarist-ref="proxyOne"/>
+
+    <bean id="proxyOne" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:target-ref="johnMayer5" p:interceptorNames-ref="interceptorAdviceNames"/>
+
+    <util:list id="interceptorAdviceNames">
+        <value>advice</value>
+    </util:list>
+
+
+    <bean id="documentsristTwo" class="com.eplusing.prospring5.ch5.Documentarist" p:guitarist-ref="proxyTwo"/>
+
+    <bean id="proxyTwo" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:target-ref="johnMayer5" p:interceptorNames-ref="interceptorAdvisorNames"/>
+
+    <util:list id="interceptorAdvisorNames">
+        <value>advisor</value>
+    </util:list>
+
+    <bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor" p:advice-ref="advice">
+        <property name="pointcut">
+            <bean class="org.springframework.aop.aspectj.AspectJExpressionPointcut"
+                  p:expression="execution(* sing*(..))"/>
+        </property>
+
+    </bean>
+
+
+</beans>
