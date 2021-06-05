@@ -10,7 +10,6 @@
     <modules>
         <module>demo1200-designpattern</module>
         <module>demo1200-docker</module>
-        <module>demo1200-javafeature</module>
         <module>demo1200-jvm</module>
         <module>demo1200-microservice</module>
         <module>demo1200-mvn</module>
