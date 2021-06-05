@@ -73,18 +73,18 @@ public class SMTest {
         try {
             ByteArrayOutputStream bos1 = new ByteArrayOutputStream();
             FileInputStream fis1 = null;
-            int num = 1;
+            int num = 0;
 
             for (int i = 0; i < num + 1; i++) {
 
-                fis1 = new FileInputStream(new File("C:\\Users\\Admin\\Desktop\\blog\\bis-db-temp\\bis-db-temp." + i));
+                fis1 = new FileInputStream(new File("C:\\Users\\Admin\\Desktop\\logs\\patms-pay-gw-inner.base64EncodeSec" + i));
                 byte[] b = new byte[1024 * 1024];
                 int n;
                 while ((n = fis1.read(b)) != -1) {
                     bos1.write(b, 0, n);
                 }
                 fis1.close();
-                System.out.println("读入加密文件C:\\Users\\Admin\\Desktop\\blog\\bis-db-temp\\bis-db-temp." + i);
+                System.out.println("读入加密文件C:\\Users\\Admin\\Desktop\\logs\\patms-pay-gw-inner." + i);
             }
 
             bos1.close();
@@ -105,10 +105,10 @@ public class SMTest {
 
         ByteBuffer bb = ByteBuffer.wrap(deBytes);
 
-        FileChannel fc = new FileOutputStream("C:\\Users\\Admin\\Desktop\\blog\\bis-db-temp\\bis-db-temp.7z").getChannel();
+        FileChannel fc = new FileOutputStream("C:\\Users\\Admin\\Desktop\\logs\\patms-pay-gw-inner.7z").getChannel();
         fc.write(bb);
         fc.close();
-        System.out.println("解密加密文件C:\\Users\\Admin\\Desktop\\blog\\bis-db-temp\\bis-db-temp.7z");
+        System.out.println("解密加密文件C:\\Users\\Admin\\Desktop\\logs\\patms-pay-gw-inner.7z");
 
 
 
