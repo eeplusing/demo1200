@@ -6,17 +6,13 @@ import io.netty.channel.Channel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.example.haproxy.HAProxyHandler;
-<<<<<<< HEAD
-=======
-import io.netty.example.haproxy.HAProxyServer;
->>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 import io.netty.handler.codec.haproxy.HAProxyCommand;
 import io.netty.handler.codec.haproxy.HAProxyMessage;
 import io.netty.handler.codec.haproxy.HAProxyProtocolVersion;
 import io.netty.handler.codec.haproxy.HAProxyProxiedProtocol;
 import io.netty.util.CharsetUtil;
 
-public class TestClient  {
+public class TestClient {
     private static final String HOST = "127.0.0.1";
 
     public TestClient() {
@@ -27,7 +23,7 @@ public class TestClient  {
 
         try {
             Bootstrap b = new Bootstrap();
-            ((Bootstrap)((Bootstrap)b.group(group)).channel(NioSocketChannel.class)).handler(new HAProxyHandler());
+            ((Bootstrap) ((Bootstrap) b.group(group)).channel(NioSocketChannel.class)).handler(new HAProxyHandler());
             Channel ch = b.connect(HOST, 1800).sync().channel();
             HAProxyMessage message = new HAProxyMessage(HAProxyProtocolVersion.V2, HAProxyCommand.PROXY, HAProxyProxiedProtocol.TCP4, "127.0.0.1", "127.0.0.2", 8000, 9000);
             ch.writeAndFlush(message).sync();

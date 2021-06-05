@@ -1,10 +1,6 @@
 package com.eplusing.demo1200.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
-<<<<<<< HEAD
-=======
-import io.netty.buffer.PooledByteBufAllocator;
->>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -14,10 +10,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-<<<<<<< HEAD
-=======
-import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -40,17 +33,17 @@ public class App implements CommandLineRunner {
     public void run(String... args) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup wokerGroup = new NioEventLoopGroup();
-        try{
+        try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup,wokerGroup);
+            serverBootstrap.group(bossGroup, wokerGroup);
             serverBootstrap.option(ChannelOption.SO_BACKLOG, 500);
-            serverBootstrap.option(ChannelOption.SO_TIMEOUT, 30*1000);
+            serverBootstrap.option(ChannelOption.SO_TIMEOUT, 30 * 1000);
             serverBootstrap.channel(NioServerSocketChannel.class);
             serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
             serverBootstrap.childHandler(new NettyServerInitializer());
             ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             wokerGroup.shutdownGracefully();
         }
