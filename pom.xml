@@ -28,5 +28,6 @@
         <module>demo1200-eurekaserver</module>
         <module>demo1200-hystrix</module>
         <module>demo1200-spring</module>
+        <module>demo1200-springboot</module>
     </modules>
 </project>

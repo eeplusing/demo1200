@@ -1,0 +1,1 @@
+alert("Spring boot static resources");
