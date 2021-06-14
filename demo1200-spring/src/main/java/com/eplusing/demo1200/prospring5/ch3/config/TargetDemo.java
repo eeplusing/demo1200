@@ -1,8 +1,6 @@
 package com.eplusing.demo1200.prospring5.ch3.config;
 
-import com.eplusing.demo1200.hystrix.prospring5.ch3.sandbox.*;
 import com.eplusing.demo1200.prospring5.ch3.sandbox.*;
-import com.eplusing.prospring5.ch3.sandbox.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -19,8 +19,8 @@ import com.eplusing.demo1200.springboot.dao.IUserDao;
  * 
  * #不配或者spring.aop.proxy-target-class=false则默认使用jdk的动态代理实现aop，spring.aop.proxy-target-class=true
  * */
-@SpringBootApplication
-@EnableAspectJAutoProxy(exposeProxy=true)
+//@SpringBootApplication
+//@EnableAspectJAutoProxy(exposeProxy=true)
 public class AppAop {
 	public static void main(String[] args) {
 		//AopAutoConfiguration

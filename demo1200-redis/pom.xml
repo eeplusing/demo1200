@@ -7,7 +7,6 @@
     <artifactId>demo1200-redis</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>redis</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -50,12 +49,13 @@
                     <version>3.0.2</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>

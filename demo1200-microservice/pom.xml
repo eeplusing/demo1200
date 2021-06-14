@@ -9,9 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.eplusing</groupId>
-    <artifactId>demo1200-kafka</artifactId>
+    <artifactId>demo1200-microservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>microservice</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>

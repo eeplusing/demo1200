@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 //@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 //@EnableAspectJAutoProxy(exposeProxy=true)
 
-@WebMvcTest(controllers=BookController.class)
+@WebMvcTest(controllers = BookController.class)
 public class BookControllerTest {
 
 	/*@Autowired
@@ -26,13 +26,13 @@ public class BookControllerTest {
 		String content = restTemplate.getForObject("/book/home", String.class);
 		Assert.assertEquals("bookhome", content);
 	}*/
-	
-	@Autowired
-	private MockMvc mvc;
-	@Test
-	public void testHome2() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/book/home")).andExpect(MockMvcResultMatchers.status().isOk());
-		mvc.perform(MockMvcRequestBuilders.get("/book/home")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().string("bookhome"));
-	}
 
+    @Autowired
+    private MockMvc mvc;
+
+    @Test
+    public void testHome2() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/book/home")).andExpect(MockMvcResultMatchers.status().isOk());
+        mvc.perform(MockMvcRequestBuilders.get("/book/home")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().string("bookhome"));
+    }
 }

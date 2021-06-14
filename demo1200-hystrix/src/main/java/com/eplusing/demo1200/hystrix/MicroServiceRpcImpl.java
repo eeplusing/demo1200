@@ -1,7 +1,8 @@
 package com.eplusing.demo1200.hystrix;
 
-import com.netflix.hystrix.HystrixCommand;
-import com.netflix.hystrix.strategy.properties.HystrixProperty ;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.hystrix.contrib.javanica.conf.HystrixPropertiesManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class MicroServiceRpcImpl {
     private MicroServiceInvokeClient microServiceInvokeClient;
 
 
-    @HystrixCommand(groupKey="UserGroup", commandKey = "GetUserByIdCommand",
+/*    @HystrixCommand(groupKey="UserGroup", commandKey = "GetUserByIdCommand",
             commandProperties = {
                     @HystrixProperty(name = "thread.timeout", value = "500"),
                     @HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE"),
@@ -25,7 +26,7 @@ public class MicroServiceRpcImpl {
                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "15"),
                     @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "12"),
                     @HystrixProperty(name = "metrics.rollingStats.time", value = "1440")
-            })
+            })*/
     public String rpc(String reqData) {
         String rspData = microServiceInvokeClient.invokeMicroService(reqData);
 

@@ -34,7 +34,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * */
 
 
-@SpringBootApplication(scanBasePackages="com.eplusing.spring", exclude=GBKCondition.class)
+//@SpringBootApplication(scanBasePackages="com.eplusing.spring", exclude=GBKCondition.class)
 public class App9{
 	public static void main(String[] args) {
 		

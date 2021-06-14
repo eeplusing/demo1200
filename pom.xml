@@ -29,5 +29,6 @@
         <module>demo1200-nginx</module>
         <module>demo1200-microservice</module>
         <module>demo1200-springcloudgateway</module>
+        <module>demo1200-kafka</module>
     </modules>
 </project>

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
  * metrics查看调用次数
  * */
 
-@SpringBootApplication
+//@SpringBootApplication
 @PropertySource("classpath:my.properties")
 public class AppActuator {
 	public static void main(String[] args) {

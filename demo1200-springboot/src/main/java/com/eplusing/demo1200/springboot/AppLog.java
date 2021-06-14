@@ -19,7 +19,7 @@ import com.eplusing.demo1200.springboot.dao.UserDao;
 
 springboot默认支持logback,在classpath下放logback.xml，logback-spring.xml的文件
  * */
-@SpringBootApplication(exclude=WebSocketAutoConfiguration.class)
+//@SpringBootApplication(exclude=WebSocketAutoConfiguration.class)
 public class AppLog {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(AppLog.class, args);

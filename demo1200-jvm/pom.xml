@@ -5,7 +5,18 @@
   <groupId>com.eplusing</groupId>
   <artifactId>demo1200-jvm</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>jvm</name>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

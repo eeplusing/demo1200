@@ -1,4 +1,4 @@
-package com.eplusing.demo1200;
+package com.eplusing;
 
 import static org.junit.Assert.assertTrue;
 

@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 
-@SpringBootApplication
-@EnableTransactionManagement
+//@SpringBootApplication
+//@EnableTransactionManagement
 public class AppJdbc {
 	public static void main(String[] args) throws  Exception {
 		

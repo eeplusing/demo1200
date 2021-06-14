@@ -1,6 +1,6 @@
 package com.eplusing.demo1200.demo;
 
-import com.eplusing.demo.*;
+import com.eplusing.demo1200.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
