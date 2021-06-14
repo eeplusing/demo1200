@@ -1,4 +1,4 @@
-package com.eplusing;
+package com.eplusing.demo1200.kafka;
 
 import static org.junit.Assert.assertTrue;
 
