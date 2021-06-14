@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <<<<<<< HEAD
-<mapper namespace="com.eplusing.demo1200.mybatis.mapper.TeacherMapper">
-	<resultMap type="com.eplusing.demo1200.mybatis.po.Teacher" id="teacherPositionResultMap">
+<mapper namespace="com.eplusing.demo1200.leetcode.mybatis.mapper.TeacherMapper">
+	<resultMap type="com.eplusing.demo1200.leetcode.mybatis.po.Teacher" id="teacherPositionResultMap">
 =======
 <mapper namespace="com.meicano.mybatis.mapper.TeacherMapper">
 	<resultMap type="com.meicano.mybatis.po.Teacher" id="teacherPositionResultMap">
@@ -15,7 +15,7 @@
 			 javaType：类型
 		 -->
 <<<<<<< HEAD
-		<association property="pos" javaType="com.eplusing.demo1200.mybatis.po.Position">
+		<association property="pos" javaType="com.eplusing.demo1200.leetcode.mybatis.po.Position">
 =======
 		<association property="pos" javaType="com.meicano.mybatis.po.Position">
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
@@ -35,7 +35,7 @@
 	</select>
 	
 <<<<<<< HEAD
-	<resultMap type="com.eplusing.demo1200.mybatis.po.TeacherDetail" id="teacherDetailResultMap">
+	<resultMap type="com.eplusing.demo1200.leetcode.mybatis.po.TeacherDetail" id="teacherDetailResultMap">
 =======
 	<resultMap type="com.meicano.mybatis.po.TeacherDetail" id="teacherDetailResultMap">
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
@@ -49,11 +49,11 @@
 			 javaType：类型
 		 -->
 <<<<<<< HEAD
-		<association property="pos" javaType="com.eplusing.demo1200.mybatis.po.Position">
+		<association property="pos" javaType="com.eplusing.demo1200.leetcode.mybatis.po.Position">
 			<id property="id" column="id"/>
 			<result property="name" column="t_pos_name"/>
 		</association>	
-		<collection property="studentList" javaType="List" ofType="com.eplusing.demo1200.mybatis.po.Student">
+		<collection property="studentList" javaType="List" ofType="com.eplusing.demo1200.leetcode.mybatis.po.Student">
 =======
 		<association property="pos" javaType="com.meicano.mybatis.po.Position">
 			<id property="id" column="id"/>

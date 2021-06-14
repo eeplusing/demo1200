@@ -15,7 +15,7 @@
     <bean class="java.lang.String"/>
     <bean class="java.lang.String"/>
 
-    <bean id="johnMayer" class="com.eplusing.prospring5.ch3.xml.Singer"
+    <bean id="johnMayer" class="com.eplusing.demo1200.prospring5.ch3.xml.Singer"
     depends-on="gopher"/>
-    <bean id="gopher" class="com.eplusing.prospring5.ch3.xml.Guitar"/>
+    <bean id="gopher" class="com.eplusing.demo1200.prospring5.ch3.xml.Guitar"/>
 </beans>

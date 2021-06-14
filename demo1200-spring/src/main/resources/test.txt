@@ -1,2 +1,2 @@
-renderer.class=com.eplusing.prospring5.ch2.decoupled.StandardOutMessageRenderer
-provider.class=com.eplusing.prospring5.ch2.decoupled.HelloWorldMessageProvider
+renderer.class=StandardOutMessageRenderer
+provider.class=HelloWorldMessageProvider

@@ -8,7 +8,7 @@ mapper代理开发方式规则:
  -->
 <!-- 1.mapper代理开发时将namespace指定为mapper接口的全限定名, 将UserMapper.java与UserMapper.xml关联-->
 <<<<<<< HEAD
- <mapper namespace="com.eplusing.demo1200.mybatis.mapper.UserMapper">
+ <mapper namespace="com.eplusing.demo1200.leetcode.mybatis.mapper.UserMapper">
 =======
  <mapper namespace="com.meicano.mybatis.mapper.UserMapper">
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
@@ -42,7 +42,7 @@ mapper代理开发方式规则:
  		
  		<!-- 订单信息 一个用户对应多个订单使用collection映射 -->
 <<<<<<< HEAD
- 		<collection property="ordersList" ofType="com.eplusing.demo1200.mybatis.po.Orders">
+ 		<collection property="ordersList" ofType="com.eplusing.demo1200.leetcode.mybatis.po.Orders">
 =======
  		<collection property="ordersList" ofType="com.meicano.mybatis.po.Orders">
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f

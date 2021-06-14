@@ -8,14 +8,14 @@
     <bean name="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
         <property name="customEditors">
             <map>
-                <entry key="com.eplusing.prospring5.ch4.FullName"
-                       value="com.eplusing.prospring5.ch4.NamePropertyEditor"/>
+                <entry key="com.eplusing.demo1200.prospring5.ch4.FullName"
+                       value="com.eplusing.demo1200.prospring5.ch4.NamePropertyEditor"/>
             </map>
         </property>
 
     </bean>
 
-    <bean id="exampleBean" class="com.eplusing.prospring5.ch4.CustomEditorExample"
+    <bean id="exampleBean" class="com.eplusing.demo1200.prospring5.ch4.CustomEditorExample"
           p:name="CAO XUANXUAN"/>
 
 </beans>

@@ -1,0 +1,10 @@
+nginx  版本：nginx/Windows-1.20.1  pgp
+下载地址：http://nginx.org/en/download.html
+
+停止端口服务：
+netstat -nao
+tasklist | findstr 14364
+taskkill /f /t /im "进程id或者进程名称"
+
+
+配置：

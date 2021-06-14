@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <<<<<<< HEAD
-<mapper namespace="com.eplusing.demo1200.mybatis.mapper.PositionMapper">
-	<resultMap type="com.eplusing.demo1200.mybatis.po.Position" id="positionTeacherResultMap">
+<mapper namespace="com.eplusing.demo1200.leetcode.mybatis.mapper.PositionMapper">
+	<resultMap type="com.eplusing.demo1200.leetcode.mybatis.po.Position" id="positionTeacherResultMap">
 =======
 <mapper namespace="com.meicano.mybatis.mapper.PositionMapper"> 
 	<resultMap type="com.meicano.mybatis.po.Position" id="positionTeacherResultMap">
@@ -17,7 +17,7 @@
 		所以这里是Teacher。
 		 -->
 <<<<<<< HEAD
-		<collection property="teacherList" javaType="List" ofType="com.eplusing.demo1200.mybatis.po.Teacher" >
+		<collection property="teacherList" javaType="List" ofType="com.eplusing.demo1200.leetcode.mybatis.po.Teacher" >
 =======
 		<collection property="teacherList" javaType="List" ofType="com.meicano.mybatis.po.Teacher" >
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
@@ -91,7 +91,7 @@
 	</select>
 	
 <<<<<<< HEAD
-	<resultMap type="com.eplusing.demo1200.mybatis.po.Position" id="positionStudentResultMap">
+	<resultMap type="com.eplusing.demo1200.leetcode.mybatis.po.Position" id="positionStudentResultMap">
 =======
 	<resultMap type="com.meicano.mybatis.po.Position" id="positionStudentResultMap">
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f

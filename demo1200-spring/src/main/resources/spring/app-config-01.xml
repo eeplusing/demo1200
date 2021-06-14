@@ -12,10 +12,10 @@
     <bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer"
           p:propertyEditorRegistrars-ref="propertyEditorRegisrarsList"/>
     <util:list id="propertyEditorRegisrarsList">
-        <bean class="com.eplusing.prospring5.ch4.PropertyEditorBean$CustomPropertyEditorRegistar"/>
+        <bean class="com.eplusing.demo1200.prospring5.ch4.PropertyEditorBean$CustomPropertyEditorRegistar"/>
     </util:list>
 
-    <bean id="builtInSample" class="com.eplusing.prospring5.ch4.PropertyEditorBean"
+    <bean id="builtInSample" class="com.eplusing.demo1200.prospring5.ch4.PropertyEditorBean"
           p:character="A"
           p:bytes="AGC FV"
           p:cls="java.lang.String"

@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/util/spring-util.xsd">
 
     <context:component-scan base-package="com.eplusing.prospring5.ch3.annotation">
-        <context:exclude-filter type="assignable" expression="com.eplusing.prospring5.ch3.annotation.NotAService"/>
+        <context:exclude-filter type="assignable" expression="com.eplusing.demo1200.prospring5.ch3.annotation.NotAService"/>
     </context:component-scan>
 
     <util:map id="map" map-class="java.util.HashMap">
@@ -35,11 +35,11 @@
     </util:list>
 
     <!--  <bean id="messageProvider"
-            class="com.eplusing.prospring5.ch3.xml.ConfigurableMessageProvider">
+            class="ConfigurableMessageProvider">
           <constructor-arg value="the message from ch3.xml.ConfigurableMessageProvider"/>
       </bean>-->
     <bean id="messageProvider"
-          class="com.eplusing.prospring5.ch3.xml.ConfigurableMessageProvider"
+          class="com.eplusing.demo1200.prospring5.ch3.xml.ConfigurableMessageProvider"
           c:message="the message from ch3.xml.ConfigurableMessageProvider">
     </bean>
 
@@ -49,15 +49,15 @@
     </bean>
 
     <context:annotation-config/>
-    <bean id="singerOne" class="com.eplusing.prospring5.ch4.SingerWithJSR250"
+    <bean id="singerOne" class="com.eplusing.demo1200.prospring5.ch4.SingerWithJSR250"
           p:age="28" p:name="Lily"/>
-    <bean id="singerTwo" class="com.eplusing.prospring5.ch4.SingerWithJSR250"
+    <bean id="singerTwo" class="com.eplusing.demo1200.prospring5.ch4.SingerWithJSR250"
           p:age="18" />
-    <bean id="singerThree" class="com.eplusing.prospring5.ch4.SingerWithJSR250"
+    <bean id="singerThree" class="com.eplusing.demo1200.prospring5.ch4.SingerWithJSR250"
           p:name="XUANXUAN" p:age="18" />
 
-    <bean id="shutdownHook" class="com.eplusing.prospring5.ch4.ShutdownHookBean"/>
-    <bean id="destructiveBean" class="com.eplusing.prospring5.ch4.DestructiveBeanWithInterface"
+    <bean id="shutdownHook" class="com.eplusing.demo1200.prospring5.ch4.ShutdownHookBean"/>
+    <bean id="destructiveBean" class="com.eplusing.demo1200.prospring5.ch4.DestructiveBeanWithInterface"
           p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.separator']}test.txt"
     />
 

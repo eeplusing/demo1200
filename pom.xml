@@ -11,7 +11,6 @@
         <module>demo1200-designpattern</module>
         <module>demo1200-docker</module>
         <module>demo1200-jvm</module>
-        <module>demo1200-microservice</module>
         <module>demo1200-mvn</module>
         <module>demo1200-mybatis</module>
         <module>demo1200-rocketmq</module>
@@ -25,8 +24,10 @@
         <module>demo1200-redis</module>
         <module>demo1200-hystrix</module>
         <module>demo1200-eurekaserver</module>
-        <module>demo1200-hystrix</module>
         <module>demo1200-spring</module>
         <module>demo1200-springboot</module>
+        <module>demo1200-nginx</module>
+        <module>demo1200-microservice</module>
+        <module>demo1200-springcloudgateway</module>
     </modules>
 </project>

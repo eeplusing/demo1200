@@ -12,19 +12,19 @@
     <bean id="john" name="john jon johnny,jonathan;jim, johnte" class="java.lang.String"/>
     <bean id="idjohn idjon idjohnny,idjonathan" class="java.lang.String"/>
 
-    <bean id="fooOne" class="com.eplusing.prospring5.ch3.xml.Foo"/>
-    <bean id="barOne" class="com.eplusing.prospring5.ch3.xml.Bar"/>
+    <bean id="fooOne" class="com.eplusing.demo1200.prospring5.ch3.xml.Foo"/>
+    <bean id="barOne" class="com.eplusing.demo1200.prospring5.ch3.xml.Bar"/>
 
     <bean id="targetByName" autowire="byName"
-          class="com.eplusing.prospring5.ch3.xml.Target"
+          class="com.eplusing.demo1200.prospring5.ch3.xml.Target"
     lazy-init="true"/>
 
     <bean id="targetByType" autowire="byType"
-          class="com.eplusing.prospring5.ch3.xml.Target"
+          class="com.eplusing.demo1200.prospring5.ch3.xml.Target"
     lazy-init="true"/>
 
     <bean id="targetConstructor" autowire="constructor"
-          class="com.eplusing.prospring5.ch3.xml.Target"
+          class="com.eplusing.demo1200.prospring5.ch3.xml.Target"
     lazy-init="true"/>
 
 </beans>

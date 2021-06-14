@@ -8,13 +8,13 @@
           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="song1"
-          class="com.eplusing.prospring5.ch3.Song"
+          class="com.eplusing.demo1200.prospring5.ch3.Song"
           p:title-ref="parentTitle"/>
     <bean id="song2"
-          class="com.eplusing.prospring5.ch3.Song"
+          class="com.eplusing.demo1200.prospring5.ch3.Song"
           p:title-ref="childTitle"/>
     <bean id="song3"
-          class="com.eplusing.prospring5.ch3.Song">
+          class="com.eplusing.demo1200.prospring5.ch3.Song">
         <property name="title">
             <ref parent="childTitle"></ref>
         </property>

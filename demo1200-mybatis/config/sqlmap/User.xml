@@ -12,10 +12,10 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  		resultType输出结果类型
  	-->
 <<<<<<< HEAD
- 	<select id="findUserById" parameterType="int" resultType="com.eplusing.demo1200.mybatis.po.User">
+ 	<select id="findUserById" parameterType="int" resultType="com.eplusing.demo1200.leetcode.mybatis.po.User">
  		select * from user where id = #{id}
  	</select>
- 	<select id="findUserByName" parameterType="String" resultType="com.eplusing.demo1200.mybatis.po.User">
+ 	<select id="findUserByName" parameterType="String" resultType="com.eplusing.demo1200.leetcode.mybatis.po.User">
 =======
  	<select id="findUserById" parameterType="int" resultType="com.meicano.mybatis.po.User">
  		select * from user where id = #{id}
@@ -35,7 +35,7 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  	resultType:select LAST_INSERT_ID的结果类型
  	 -->
 <<<<<<< HEAD
- 	<insert id="insertUser" parameterType="com.eplusing.demo1200.mybatis.po.User">
+ 	<insert id="insertUser" parameterType="com.eplusing.demo1200.leetcode.mybatis.po.User">
 =======
  	<insert id="insertUser" parameterType="com.meicano.mybatis.po.User">
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f
@@ -71,7 +71,7 @@ mapper代理开发时将namespace指定为mapper接口的全限定名
  	-->
  	<!-- 更新用户  要求传入的user对象中必须包含id-->
 <<<<<<< HEAD
- 	<update id="updateUser" parameterType="com.eplusing.demo1200.mybatis.po.User">
+ 	<update id="updateUser" parameterType="com.eplusing.demo1200.leetcode.mybatis.po.User">
 =======
  	<update id="updateUser" parameterType="com.meicano.mybatis.po.User">	
 >>>>>>> 765f0f4ca7a11b3ceea1cb42ef0d40d1ca630a9f

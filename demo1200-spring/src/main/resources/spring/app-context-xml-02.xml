@@ -8,10 +8,10 @@
     <!--必须使用该配置，启用对注解方法的支持-->
     <context:annotation-config/>
     <!--必须声明配置类类型的bean-->
-    <bean class="com.eplusing.prospring5.ch4.mixed.AppConfigSix"/>
+    <bean class="com.eplusing.demo1200.prospring5.ch4.mixed.AppConfigSix"/>
 
     <bean id="messageRenderder"
-          class="com.eplusing.prospring5.ch2.decoupled.StandardOutMessageRenderer"
+          class="com.eplusing.demo1200.prospring5.ch2.decoupled.StandardOutMessageRenderer"
           p:messageProvider-ref="provider">
     </bean>
 </beans>

@@ -5,5 +5,5 @@
           http://www.springframework.org/schema/beans/spring-beans.xsd"
        profile="kindergarten">
 
-    <bean id="foodProviderService" class="com.eplusing.prospring5.ch4.kindergarten.FoodProviderServiceImpl"/>
+    <bean id="foodProviderService" class="com.eplusing.demo1200.prospring5.ch4.kindergarten.FoodProviderServiceImpl"/>
 </beans>

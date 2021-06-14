@@ -12,23 +12,23 @@
     <bean id="john" name="john jon johnny,jonathan;jim, johnte" class="java.lang.String"/>
     <bean id="idjohn idjon idjohnny,idjonathan" class="java.lang.String"/>
 
-    <bean id="fooOne" class="com.eplusing.prospring5.ch3.xml.complicated.FooImplOne"/>
-    <bean id="fooTwo" class="com.eplusing.prospring5.ch3.xml.complicated.FooImplTwo"/>
-    <bean id="bar" class="com.eplusing.prospring5.ch3.xml.Bar"/>
+    <bean id="fooOne" class="com.eplusing.demo1200.prospring5.ch3.xml.complicated.FooImplOne"/>
+    <bean id="fooTwo" class="com.eplusing.demo1200.prospring5.ch3.xml.complicated.FooImplTwo"/>
+    <bean id="bar" class="com.eplusing.demo1200.prospring5.ch3.xml.Bar"/>
 
   <!-- <bean id="targetByName" autowire="byName"
-          class="com.eplusing.prospring5.ch3.xml.complicated.CTarget"
+          class="CTarget"
     lazy-init="true"/>-->
 
     <bean id="targetByType" autowire="byType"
-          class="com.eplusing.prospring5.ch3.xml.complicated.CTarget"
+          class="com.eplusing.demo1200.prospring5.ch3.xml.complicated.CTarget"
     lazy-init="true"/>
 
     <bean id="trickyTarget" autowire="byType"
-          class="com.eplusing.prospring5.ch3.sandbox.TrickyTarget"/>
+          class="com.eplusing.demo1200.prospring5.ch3.sandbox.TrickyTarget"/>
 
    <!--<bean id="targetConstructor" autowire="constructor"
-          class="com.eplusing.prospring5.ch3.xml.complicated.CTarget"
+          class="CTarget"
     lazy-init="true"/>-->
 
 </beans>

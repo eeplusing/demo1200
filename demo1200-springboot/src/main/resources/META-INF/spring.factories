@@ -1,2 +1,2 @@
-org.springframework.boot.env.EnvironmentPostProcessor=com.eplusing.spring.springboot.MyEnvironmentPostProcessor
+org.springframework.boot.env.EnvironmentPostProcessor=MyEnvironmentPostProcessor
 

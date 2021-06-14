@@ -7,7 +7,7 @@
     <artifactId>demo1200</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>mvn</artifactId>
+  <artifactId>demo1200-mvn</artifactId>
   <name>mvn</name>
   <url>http://maven.apache.org</url>
   <properties>
@@ -17,8 +17,17 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.13</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>2.3.0.RELEASE</version>
+      </plugin>
+    </plugins>
+  </build>
 </project>
