@@ -1,7 +1,7 @@
 package com.eplusing.demo1200.leetcode.shopee;
 
 public class Singleton {
-    private static Singleton instance;
+    private volatile static Singleton instance;
     private Singleton (){}
     public static Singleton getInstance() {
         if (instance == null) {

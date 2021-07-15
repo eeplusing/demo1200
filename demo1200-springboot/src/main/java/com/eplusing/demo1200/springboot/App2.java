@@ -1,17 +1,18 @@
 package com.eplusing.demo1200.springboot;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Hello world!
- *
  */
-//@SpringBootApplication
-//@ComponentScan
+/*@SpringBootApplication
+@ComponentScan*/
 public class App2 {
-	public static void main(String[] args) {
-		/*Spring运行的3种方式*/
+    public static void main(String[] args) {
+        /*Spring运行的3种方式*/
 		/* 方式1
 		ConfigurableApplicationContext context = SpringApplication.run(App.class, args);
 		context.getBean(Runnable.class).run();
@@ -36,20 +37,20 @@ public class App2 {
 		context.getBean(Runnable.class).run();
 		System.out.println(context.getBean(User.class));
 		*/
-		
-		ConfigurableApplicationContext context = SpringApplication.run(App2.class, args);
-		
-		context.getBean(Runnable.class).run();
-		System.out.println(context.getEnvironment().getProperty("local.ip"));
-		System.out.println(context.getEnvironment().getProperty("local.port", Integer.class));
-		context.getBean(UserConfig.class).show();
-		context.getBean(JdbcConfig.class).show();
-		context.getBean(DataSourceProperties.class).show();
-		
-		System.out.println(context.getBean(User.class));
-		
-		System.out.println("Hello World!");
-	}
+
+        ConfigurableApplicationContext context = SpringApplication.run(App2.class, args);
+
+        context.getBean(Runnable.class).run();
+        System.out.println(context.getEnvironment().getProperty("local.ip"));
+        System.out.println(context.getEnvironment().getProperty("local.port", Integer.class));
+        context.getBean(UserConfig.class).show();
+        context.getBean(JdbcConfig.class).show();
+        context.getBean(DataSourceProperties.class).show();
+
+        System.out.println(context.getBean(User.class));
+
+        System.out.println("Hello World!");
+    }
 	
 	/*@Bean
 	public Runnable createRunnable(){

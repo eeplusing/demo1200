@@ -17,7 +17,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  *
  * */
 
-@SpringBootApplication
+//@SpringBootApplication
 public class AppTest {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(AppTest.class, args);

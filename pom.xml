@@ -30,5 +30,12 @@
         <module>demo1200-springcloudgateway</module>
         <module>demo1200-kafka</module>
         <module>demo1200-microservice</module>
+        <module>demo1200-openjdk</module>
+        <module>demo1200-elasticsearch</module>
+        <module>demo1200-springcloudauth2</module>
+        <module>demo1200-activity</module>
+        <module>demo1200-activemq</module>
+        <module>demo1200-mycat</module>
+        <module>demo1200-apollo</module>
     </modules>
 </project>
