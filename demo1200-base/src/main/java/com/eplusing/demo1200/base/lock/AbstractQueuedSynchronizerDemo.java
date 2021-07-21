@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix.lock;
+package com.eplusing.demo1200.base.lock;
 
 import java.util.concurrent.locks.ReentrantLock;
 

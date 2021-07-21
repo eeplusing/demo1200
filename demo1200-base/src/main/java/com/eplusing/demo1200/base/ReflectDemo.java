@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix;
+package com.eplusing.demo1200.base;
 
 public class ReflectDemo {
     //发射，在运行时动态获取类的信息

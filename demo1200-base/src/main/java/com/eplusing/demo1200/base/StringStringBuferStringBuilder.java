@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix;
+package com.eplusing.demo1200.base;
 
 import com.sun.org.apache.xpath.internal.operations.String;
 

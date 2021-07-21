@@ -1,8 +1,5 @@
 package com.eplusing.demo1200.hystrix;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
-import com.netflix.hystrix.contrib.javanica.conf.HystrixPropertiesManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

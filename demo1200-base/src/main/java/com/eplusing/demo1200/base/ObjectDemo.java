@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix;
+package com.eplusing.demo1200.base;
 
 public class ObjectDemo implements Cloneable {
 

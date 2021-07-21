@@ -24,6 +24,19 @@ public class RedisLockDemo {
             System.out.println("获取锁失败");
         }
 
+        //业务操作
+
+        boolean release = instance.unlock(key, "1");
+        if (!release) {
+            System.out.println("释放锁失败");
+        }
+        release = instance.unlock(key, requestId);
+
+        if (release) {
+            System.out.println("释放锁成功");
+        }
+
+
     }
 
     public boolean lock(String key, String requestId) {

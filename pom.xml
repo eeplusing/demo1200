@@ -37,5 +37,10 @@
         <module>demo1200-activemq</module>
         <module>demo1200-mycat</module>
         <module>demo1200-apollo</module>
+        <module>demo1200-transaction</module>
+        <module>demo1200-memcache</module>
+        <module>demo1200-lucene</module>
+        <module>demo1200-jta</module>
+        <module>demo1200-zuul</module>
     </modules>
 </project>

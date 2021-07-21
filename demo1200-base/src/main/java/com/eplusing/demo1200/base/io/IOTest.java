@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix.io;
+package com.eplusing.demo1200.base.io;
 
 import java.io.InputStream;
 import java.io.OutputStream;

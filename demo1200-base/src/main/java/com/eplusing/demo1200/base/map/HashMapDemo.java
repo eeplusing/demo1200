@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix.map;
+package com.eplusing.demo1200.base.map;
 
 import java.util.HashMap;
 

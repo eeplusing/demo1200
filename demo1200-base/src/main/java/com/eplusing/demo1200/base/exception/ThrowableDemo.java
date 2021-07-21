@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix.exception;
+package com.eplusing.demo1200.base.exception;
 
 public class ThrowableDemo {
 

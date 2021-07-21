@@ -1,4 +1,4 @@
-package com.eplusing.demo1200.hystrix.multithread;
+package com.eplusing.demo1200.base.multithread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
