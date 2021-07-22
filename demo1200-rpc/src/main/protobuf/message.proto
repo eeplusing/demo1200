@@ -1,0 +1,9 @@
+option java_package="com.eplusing.demo1200.rpc.protobuf";
+option java_outer_classname="ProtoPerson";
+
+message Person {
+    required int32 id = 1;
+    required string name = 2;
+    option string email = 3;
+}
+

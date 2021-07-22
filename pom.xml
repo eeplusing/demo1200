@@ -42,5 +42,6 @@
         <module>demo1200-lucene</module>
         <module>demo1200-jta</module>
         <module>demo1200-zuul</module>
+        <module>demo1200-rpc</module>
     </modules>
 </project>
