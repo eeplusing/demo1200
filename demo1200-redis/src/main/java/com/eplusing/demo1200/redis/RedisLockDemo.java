@@ -36,7 +36,6 @@ public class RedisLockDemo {
             System.out.println("释放锁成功");
         }
 
-
     }
 
     public boolean lock(String key, String requestId) {
@@ -52,11 +51,13 @@ public class RedisLockDemo {
 
                 //SET命令返回OK ，则证明获取锁成功
                 if ("OK".equals(lock)) {
+                    System.out.println("加锁成功");
                     return true;
                 }
                 //否则循环等待，在timeout时间内仍未获取到锁，则获取失败
                 long l = System.currentTimeMillis() - start;
                 if (l >= 10 * 1000) {
+                    System.out.println("枷锁失败");
                     return false;
                 }
                 try {
@@ -92,9 +93,12 @@ public class RedisLockDemo {
             Object result = jedis.eval(script, Collections.singletonList(key),
                     Collections.singletonList(requestId));
             if ("1".equals(result.toString())) {
+                System.out.println("释放锁成功");
                 return true;
             }
+            System.out.println("释放锁失败");
             return false;
+
         } finally {
             jedis.close();
         }

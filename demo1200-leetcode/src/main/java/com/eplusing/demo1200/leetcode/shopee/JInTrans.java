@@ -19,5 +19,16 @@ public class JInTrans {
         result = new StringBuffer(result).reverse().toString();
         System.out.println(result);
 
+        n = 16;
+        System.out.println(Integer.toBinaryString(n));
+        System.out.println(Integer.toHexString(n));
+        System.out.println(Integer.toOctalString(n));
+        System.out.println(Integer.toOctalString(n));
+
+        System.out.println(Integer.parseUnsignedInt("10000", 2));
+        System.out.println(Integer.parseUnsignedInt("10000", 3));
+        System.out.println(Integer.parseUnsignedInt("10000", 4));
+        System.out.println(Integer.parseUnsignedInt("10000", 8));
+        System.out.println(Integer.parseUnsignedInt("10000", 16));
     }
 }

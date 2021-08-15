@@ -2,6 +2,8 @@ package com.eplusing.demo1200.db.mysql;
 
 public class MysqlDemo {
 
+    //https://blog.csdn.net/qq_36783142/article/details/72194993 mysql主从部署
+
     /**
      *mysql的支持的存储引擎， 通过show engines; 可查看mysql支持的存储引擎
      * 表 1 MySQL 的存储引擎

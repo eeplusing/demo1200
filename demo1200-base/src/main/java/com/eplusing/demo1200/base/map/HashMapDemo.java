@@ -37,6 +37,7 @@ public class HashMapDemo {
     public static void main(String[] args) {
         HashMap map = new HashMap();
         map.put("a", 1);
+        map.get("a");
     }
 
 }
