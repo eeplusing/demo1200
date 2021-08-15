@@ -1,0 +1,34 @@
+docker search activemq
+
+docker pull webcenter/activemq
+
+
+
+docker run -d --name activemq -p 61617:61616 -p 8162:8161 webcenter/activemq
+
+* 61616是 activemq 的容器使用端口（映射为61617）
+* 8161是 web 页面管理端口（对外映射为8162）
+
+
+docker ps
+
+
+docker exec -it activemq /bin/bash
+
+
+ActiveMQ 默认用户名和密码
+用户名：admin
+密码：admin
+可以在/conf/users.properties中寻找。
+
+
+
+
+查看容器
+docker container ls -a
+删除容器
+docker rm containerId
+查看镜像
+docker images
+
+
