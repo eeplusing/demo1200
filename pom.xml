@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.eplusing</groupId>
+    <artifactId>epay</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <!-- <snapshots> <enabled>true</enabled> <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy> </snapshots> -->
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <modules>
+        <module>demo1200-activemq</module>
+        <module>demo1200-activity</module>
+        <module>demo1200-apollo</module>
+        <module>demo1200-base</module>
+        <module>demo1200-db</module>
+        <module>demo1200-designpattern</module>
+        <module>demo1200-docker</module>
+        <module>demo1200-elasticsearch</module>
+        <module>demo1200-eurekaserver</module>
+        <module>demo1200-hystrix</module>
+        <module>demo1200-jta</module>
+        <module>demo1200-jvm</module>
+        <module>demo1200-kafka</module>
+        <module>demo1200-leetcode</module>
+        <module>demo1200-lucene</module>
+        <module>demo1200-memcache</module>
+        <module>demo1200-microservice</module>
+        <module>demo1200-mvn</module>
+        <module>demo1200-mybatis</module>
+        <module>demo1200-mycat</module>
+        <module>demo1200-netty</module>
+        <module>demo1200-nginx</module>
+        <module>demo1200-openjdk</module>
+        <module>demo1200-oracle</module>
+        <module>demo1200-os</module>
+        <module>demo1200-rabbitmq</module>
+        <module>demo1200-redis</module>
+        <module>demo1200-rocketmq</module>
+        <module>demo1200-rpc</module>
+        <module>demo1200-security</module>
+        <module>demo1200-sm</module>
+        <module>demo1200-spring</module>
+        <module>demo1200-springboot</module>
+        <module>demo1200-springcloudauth2</module>
+        <module>demo1200-springcloudgateway</module>
+        <module>demo1200-transaction</module>
+        <module>demo1200-zeromq</module>
+        <module>demo1200-zuul</module>
+
+    </modules>
+
+</project>
