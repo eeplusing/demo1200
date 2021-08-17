@@ -65,6 +65,7 @@
         <module>demo1200-transaction</module>
         <module>demo1200-zeromq</module>
         <module>demo1200-zuul</module>
+        <module>demo1200-mysql</module>
 
     </modules>
 
