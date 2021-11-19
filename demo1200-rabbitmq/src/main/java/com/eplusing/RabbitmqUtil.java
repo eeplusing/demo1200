@@ -46,6 +46,10 @@ public class RabbitmqUtil {
         try {
             channel = conn.createChannel();
             //channel.queueBind(queueName, exchangeName, routeKey);
+
+            //or
+            //channel.queueDeclare(queueName, true, false, false, null);
+
         } catch (IOException e) {
             log.error("获取rabbitmq连接异常：{}", e.getMessage());
         }
