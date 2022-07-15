@@ -1,0 +1,313 @@
+
+
+# 在master添加hosts
+cat >> /etc/hosts << EOF
+192.168.116.130 k8s-master1
+192.168.116.131 k8s-master2
+192.168.116.132 k8s-node1
+192.168.116.133 k8s-node2
+192.168.116.134 k8s-node3
+EOF
+
+
+
+etc服务器：
+#192.168.116.129
+hostnamectl set-hostname k8s-etcd1
+#192.168.116.135
+hostnamectl set-hostname k8s-etcd2
+#192.168.116.136
+hostnamectl set-hostname k8s-etcd3
+
+
+
+2. 使用自签CA签发Etcd HTTPS证书
+创建证书申请文件：
+cat > server-csr.json << EOF
+{
+    "CN": "etcd",
+    "hosts": [
+    "192.168.116.129",
+    "192.168.116.135",
+    "192.168.116.136"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "L": "BeiJing",
+            "ST": "BeiJing"
+        }
+    ]
+}
+EOF
+
+
+
+
+创建etcd配置文件
+
+
+cat > /opt/etcd/cfg/etcd.conf << EOF
+#[Member]
+ETCD_NAME="k8s-etcd1"
+ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
+ETCD_LISTEN_PEER_URLS="https://192.168.116.129:2380"
+ETCD_LISTEN_CLIENT_URLS="https://192.168.116.129:2379"
+
+#[Clustering]
+ETCD_INITIAL_ADVERTISE_PEER_URLS="https://192.168.116.129:2380"
+ETCD_ADVERTISE_CLIENT_URLS="https://192.168.116.129:2379"
+ETCD_INITIAL_CLUSTER="k8s-etcd1=https://192.168.116.129:2380,k8s-etcd2=https://192.168.116.135:2380,k8s-etcd3=https://192.168.116.136:2380"
+ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster"
+ETCD_INITIAL_CLUSTER_STATE="new"
+EOF
+
+ETCD_NAME：节点名称，集群中唯一
+ETCD_DATA_DIR：数据目录
+ETCD_LISTEN_PEER_URLS：集群通信监听地址
+ETCD_LISTEN_CLIENT_URLS：客户端访问监听地址
+ETCD_INITIAL_ADVERTISE_PEERURLS：集群通告地址
+ETCD_ADVERTISE_CLIENT_URLS：客户端通告地址
+ETCD_INITIAL_CLUSTER：集群节点地址
+ETCD_INITIALCLUSTER_TOKEN：集群Token
+ETCD_INITIALCLUSTER_STATE：加入集群的当前状态，new是新集群，existing表示加入已有集群
+
+检查etcd状态：
+ETCDCTL_API=3 /opt/etcd/bin/etcdctl --cacert=/opt/etcd/ssl/ca.pem --cert=/opt/etcd/ssl/server.pem --key=/opt/etcd/ssl/server-key.pem --endpoints="https://192.168.116.129:2379,https://192.168.116.135:2379,https://192.168.116.136:2379" endpoint health --write-out=table
+
+
+
+2. 使用自签CA签发kube-apiserver HTTPS证书
+cat > server-csr.json << EOF
+{
+    "CN": "kubernetes",
+    "hosts": [
+      "192.168.116.129",
+      "192.168.116.130",
+      "192.168.116.131",
+      "192.168.116.132",
+      "192.168.116.133",
+      "192.168.116.134",
+      "192.168.116.135",
+      "192.168.116.136",
+      "192.168.116.137",
+      "192.168.116.138",
+      "192.168.116.139",
+      "192.168.116.140",
+      "192.168.116.141",
+      "127.0.0.1",
+      "172.17.0.1",
+      "kubernetes",
+      "kubernetes.default",
+      "kubernetes.default.svc",
+      "kubernetes.default.svc.cluster",
+      "kubernetes.default.svc.cluster.local"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "L": "BeiJing",
+            "ST": "BeiJing",
+            "O": "k8s",
+            "OU": "System"
+        }
+    ]
+}
+EOF
+
+
+
+
+
+
+
+
+
+
+
+4.4 部署kube-apiserver
+1. 创建配置文件
+
+cat > /opt/kubernetes/cfg/kube-apiserver.conf << EOF
+KUBE_APISERVER_OPTS="--logtostderr=false \\
+--v=2 \\
+--log-dir=/opt/kubernetes/logs \\
+--etcd-servers=https://192.168.116.129:2379,https://192.168.116.135:2379,https://192.168.116.136:2379 \\
+--bind-address=192.168.116.130 \\
+--secure-port=6443 \\
+--advertise-address=192.168.116.130 \\
+--allow-privileged=true \\
+--service-cluster-ip-range=10.0.0.0/24 \\
+--enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,NodeRestriction \\
+--authorization-mode=RBAC,Node \\
+--enable-bootstrap-token-auth=true \\
+--token-auth-file=/opt/kubernetes/cfg/token.csv \\
+--service-node-port-range=30000-32767 \\
+--kubelet-client-certificate=/opt/kubernetes/ssl/server.pem \\
+--kubelet-client-key=/opt/kubernetes/ssl/server-key.pem \\
+--tls-cert-file=/opt/kubernetes/ssl/server.pem  \\
+--tls-private-key-file=/opt/kubernetes/ssl/server-key.pem \\
+--client-ca-file=/opt/kubernetes/ssl/ca.pem \\
+--service-account-key-file=/opt/kubernetes/ssl/ca-key.pem \\
+--service-account-issuer=api \\
+--service-account-signing-key-file=/opt/kubernetes/ssl/server-key.pem \\
+--etcd-cafile=/opt/etcd/ssl/ca.pem \\
+--etcd-certfile=/opt/etcd/ssl/server.pem \\
+--etcd-keyfile=/opt/etcd/ssl/server-key.pem \\
+--requestheader-client-ca-file=/opt/kubernetes/ssl/ca.pem \\
+--proxy-client-cert-file=/opt/kubernetes/ssl/server.pem \\
+--proxy-client-key-file=/opt/kubernetes/ssl/server-key.pem \\
+--requestheader-allowed-names=kubernetes \\
+--requestheader-extra-headers-prefix=X-Remote-Extra- \\
+--requestheader-group-headers=X-Remote-Group \\
+--requestheader-username-headers=X-Remote-User \\
+--enable-aggregator-routing=true \\
+--audit-log-maxage=30 \\
+--audit-log-maxbackup=3 \\
+--audit-log-maxsize=100 \\
+--audit-log-path=/opt/kubernetes/logs/k8s-audit.log"
+EOF
+
+
+
+3. 启用 TLS Bootstrapping 机制
+token也可自行生成替换：
+head -c 16 /dev/urandom | od -An -t x | tr -d ' '
+64c8b8f8e7568d2f8ab188ed23b769b6
+
+创建上述配置文件中token文件：
+
+cat > /opt/kubernetes/cfg/token.csv << EOF
+64c8b8f8e7568d2f8ab188ed23b769b6,kubelet-bootstrap,10001,"system:node-bootstrapper"
+EOF
+格式：token，用户名，UID，用户组
+
+
+
+启动验证：
+systemctl daemon-reload
+systemctl enable kube-apiserver
+systemctl start kube-apiserver
+systemctl status kube-apiserver
+
+etcd的证书copy到master机器上：
+
+
+
+
+4.5 部署kube-controller-manager
+生成kubeconfig文件（以下是shell命令，直接在终端执行）：
+
+KUBE_CONFIG="/opt/kubernetes/cfg/kube-controller-manager.kubeconfig"
+KUBE_APISERVER="https://192.168.116.130:6443"
+
+kubectl config set-cluster kubernetes \
+  --certificate-authority=/opt/kubernetes/ssl/ca.pem \
+  --embed-certs=true \
+  --server=${KUBE_APISERVER} \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config set-credentials kube-controller-manager \
+  --client-certificate=./kube-controller-manager.pem \
+  --client-key=./kube-controller-manager-key.pem \
+  --embed-certs=true \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config set-context default \
+  --cluster=kubernetes \
+  --user=kube-controller-manager \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config use-context default --kubeconfig=${KUBE_CONFIG}
+
+
+
+4.6 部署kube-scheduler
+生成kubeconfig文件：
+KUBE_CONFIG="/opt/kubernetes/cfg/kube-scheduler.kubeconfig"
+KUBE_APISERVER="https://192.168.116.130:6443"
+
+kubectl config set-cluster kubernetes \
+  --certificate-authority=/opt/kubernetes/ssl/ca.pem \
+  --embed-certs=true \
+  --server=${KUBE_APISERVER} \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config set-credentials kube-scheduler \
+  --client-certificate=./kube-scheduler.pem \
+  --client-key=./kube-scheduler-key.pem \
+  --embed-certs=true \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config set-context default \
+  --cluster=kubernetes \
+  --user=kube-scheduler \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config use-context default --kubeconfig=${KUBE_CONFIG}
+
+
+
+5. 查看集群状态
+
+生成kubeconfig文件：
+mkdir /root/.kube
+KUBE_CONFIG="/root/.kube/config"
+KUBE_APISERVER="https://192.168.116.130:6443"
+
+kubectl config set-cluster kubernetes \
+  --certificate-authority=/opt/kubernetes/ssl/ca.pem \
+  --embed-certs=true \
+  --server=${KUBE_APISERVER} \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config set-credentials cluster-admin \
+  --client-certificate=./admin.pem \
+  --client-key=./admin-key.pem \
+  --embed-certs=true \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config set-context default \
+  --cluster=kubernetes \
+  --user=cluster-admin \
+  --kubeconfig=${KUBE_CONFIG}
+kubectl config use-context default --kubeconfig=${KUBE_CONFIG}
+
+
+
+
+
+
+排错：
+日志: cat /var/log/messages
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

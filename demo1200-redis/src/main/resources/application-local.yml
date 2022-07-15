@@ -1,0 +1,103 @@
+spring:
+  datasource:
+    druid:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.99.43:3306?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
+      username: tradingmo
+      password: P@ssw0rd1234
+      type: com.alibaba.druid.pool.DruidDataSource
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # filters: stat,wall,log4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      useGlobalDataSourceStat: true
+
+boss:
+  redis:
+    # 模式：Standalone | Sentinel | Cluster
+    mode: sentinel
+    #master: master-redis
+    master: mymaster
+    #password: kodI2q26PJdneKF
+    password: 10010
+    #nodes: 192.168.99.65:26379,192.168.99.66:26379,192.168.99.124:26379
+    nodes: 81.69.56.82:26379,81.69.56.82:26380,81.69.56.82:26381
+
+server:
+  port: 8080
+
+apijson:
+  reload-config:
+    #30秒 一次
+    #cron: 0/30 * * * * *
+    cron: 0 0 1 * * *
+
+# 动态配置
+nacos:
+  config:
+    # nacos 服务地址(生产使用: nacos.cmbi.api:80, 开发环境统一使用: nacos-uat.cmbi.online:80)
+    server-addr: nacos-uat.cmbi.online:80
+    # nacos 服务上下文
+    context-path: /nacos
+    # nacos 动态配置环境(rhino部署的环境)
+    namespace: dev
+    # nacos 动态配置分组(rhino部署的namespace)
+    group: nebula
+    # nacos 动态配置id(项目名+部署版本)
+    data-id: nebula-starter-v1
+    # nacos 读取配置使用的只读账号密码
+    username: config
+    password: config
+
+
+# actuator上报
+# rhino配置：容器健康检查端口9091，prometheus端口9091
+#  健康检查路径使用/actuator/health/liveness，prometheus路径使用/actuator/prometheus
+management:
+  server:
+    port: ${METRIC_PORT:9091}
+  # 健康检查项
+  health:
+    defaults.enabled: false
+    ping.enabled: true
+    livenessState.enabled: true
+    readinessState.enabled: true
+  endpoint:
+    health:
+      show-details: always
+      probes.enabled: true
+      group:
+        # 服务可用性检测，只需保留此两项不动即可
+        liveness.include: livenessProbe,ping
+        readiness.include: readinessProbe,ping
+  endpoints:
+    jmx.exposure.exclude: '*'
+    web.exposure.include: 'prometheus,metrics,health'
+  metrics:
+    # false 则 http接口不会自动加Timed监控, http接口上报可以继续使用原有的上报filter和interceptor
+    web.server.request.autotime.enabled: false
+    export:
+      # 开启prometheus上报
+      prometheus.enabled: true
+
+feign:
+  datax-web:
+    service-name: datax-web
+    service-url: http://datax-web-v1.tradingmo.svc.cluster.local:8080
+    api:
+      ext-trigger: /datax/extapi/trigger
+    job:
+      MonetaryFundTxnReportJobId: ${MonetaryFundTxnReportJobId:11}
+
+
+

@@ -1,0 +1,8 @@
+一台主机搭建redis哨兵模式，用于开发环境使用
+
+HA 哨兵模式详解：https://www.cnblogs.com/duanxz/p/4701831.html
+
+参考1：https://cloud.tencent.com/developer/article/1774603
+https://my.oschina.net/zdtdtel/blog/3219761
+
+参考2：https://www.jianshu.com/p/06ab9daf921d

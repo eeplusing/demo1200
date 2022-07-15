@@ -5,12 +5,16 @@ yum remove mysql.x86_64 mysql-common.x86_64 mysql-devel.x86_64 mysql-errmsg.x86_
 groupadd mysql
 useradd -r -d /home/mysql -g mysql mysql
 mkdir -p /home/mysql
+mkdir -p /usr/local/mysql
 chown -R mysql:mysql /home/mysql
 chown -R mysql:mysql /usr/local/mysql
 
 
-配置my.cnf文件
+下载安装包：
+https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.27-linux-glibc2.12-x86_64.tar.xz
 
+配置my.cnf文件
+vi /etc/my.cnf
 新建my.cnf配置文件，并添加以下内容
 
 [mysqld]
@@ -46,6 +50,11 @@ sudo ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
 
 启动mysql:
 support-files/mysql.server start
+
+
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '150906@cpp';
+
 
 修改密码;
 
@@ -100,4 +109,11 @@ flush privileges;
 cp support-files/mysql.server /etc/init.d/mysqld
 chkconfig --add mysqld
 chkconfig --list
+
+
+
+
+
+mysql8.0.27修改密码：
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '150906@Cpp';
 
