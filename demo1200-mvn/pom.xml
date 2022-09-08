@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.eplusing</groupId>
     <artifactId>demo1200</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>demo1200-mvn</artifactId>
   <url>http://maven.apache.org</url>
