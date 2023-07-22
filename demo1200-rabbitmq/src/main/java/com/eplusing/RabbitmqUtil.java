@@ -23,12 +23,12 @@ public class RabbitmqUtil {
 
     public static void main(String[] args) {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("172.20.99.5");
+        factory.setHost("11.20.99.5");
         factory.setPort(5672);
-        factory.setUsername("momq");
-        factory.setPassword("P@ss2345");
+        factory.setUsername("mquser");
+        factory.setPassword("P@s");
         factory.setConnectionTimeout(3000);
-        factory.setVirtualHost("ttl-tap-vhost");
+        factory.setVirtualHost("srcSys-tarSys-vhost");
         Connection conn = null;
         try {
             conn = factory.newConnection();
