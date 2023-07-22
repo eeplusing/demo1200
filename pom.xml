@@ -1,22 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -75,6 +56,7 @@
         <module>demo1200-redis</module>
         <module>demo1200-rocketmq</module>
         <module>demo1200-rpc</module>
+        <module>demo1200-disrupter</module>
         <module>demo1200-security</module>
         <module>demo1200-sm</module>
         <module>demo1200-spring</module>
@@ -86,7 +68,6 @@
         <module>demo1200-zuul</module>
         <module>demo1200-mysql</module>
         <module>demo1200-ibmwebspheremq</module>
-
     </modules>
 
 </project>
