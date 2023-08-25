@@ -33,6 +33,7 @@
         <module>demo1200-base</module>
         <module>demo1200-db</module>
         <module>demo1200-designpattern</module>
+        <module>demo1200-disrupter</module>
         <module>demo1200-docker</module>
         <module>demo1200-elasticsearch</module>
         <module>demo1200-eurekaserver</module>
@@ -52,11 +53,11 @@
         <module>demo1200-openjdk</module>
         <module>demo1200-oracle</module>
         <module>demo1200-os</module>
+        <module>demo1200-pulsar</module>
         <module>demo1200-rabbitmq</module>
         <module>demo1200-redis</module>
         <module>demo1200-rocketmq</module>
         <module>demo1200-rpc</module>
-        <module>demo1200-disrupter</module>
         <module>demo1200-security</module>
         <module>demo1200-sm</module>
         <module>demo1200-spring</module>
