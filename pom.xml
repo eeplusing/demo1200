@@ -69,6 +69,7 @@
         <module>demo1200-zuul</module>
         <module>demo1200-mysql</module>
         <module>demo1200-ibmwebspheremq</module>
+        <module>demo1200-doc</module>
     </modules>
 
 </project>
