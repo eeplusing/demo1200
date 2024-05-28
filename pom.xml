@@ -70,6 +70,7 @@
         <module>demo1200-mysql</module>
         <module>demo1200-ibmwebspheremq</module>
         <module>demo1200-doc</module>
+        <module>demo1200-k8s</module>
     </modules>
 
 </project>
