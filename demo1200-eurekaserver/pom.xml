@@ -1,20 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.3</version>
         <relativePath/>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.eplusing</groupId>
     <artifactId>demo1200-eurekaserver</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -22,7 +21,6 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>2020.0.0</spring-cloud.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,10 +44,6 @@
             </exclusions>
         </dependency>
     </dependencies>
-    <dependencyManagement>
-
-    </dependencyManagement>
-
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
@@ -95,5 +89,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
 </project>

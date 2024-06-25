@@ -43,7 +43,8 @@ public class ByteBufferTest {
 
          endTime = System.currentTimeMillis();
 
-        Cleaner.create();
+        //TODO
+        //Cleaner.create();
         System.out.println("直接内存访问时间:" + (endTime - startTime) + "ms");
 
 
