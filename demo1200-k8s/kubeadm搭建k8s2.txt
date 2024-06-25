@@ -1,0 +1,287 @@
+服务器初始化、环境准备
+准备3台虚拟机，1个master，2个node节点。
+
+主机	说明
+192.168.40.180 k8s-master1节点，能连外网，centos7.x版本，至少2核CPU，2G内存
+192.168.40.181 k8s-node1节点，能连外网，centos7.x版本，至少2核CPU，2G内存
+192.168.40.182 k8s-node2节点，能连外网，centos7.x版本，至少2核CPU，2G内存
+
+
+#开始ntpd服务,或者做定时任务如:*/5 * * * * /usr/sbin/ntpdate -u 192.168.11.100
+yum -y install ntp	
+systemctl start ntpd	&& systemctl enable ntpd
+
+systemctl stop firewalld.service && systemctl disable firewalld.service
+echo "检查是否关闭防火墙：";systemctl status firewalld.service | grep -E 'Active|disabled'
+
+sed -ri 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config 
+setenforce 0
+echo "检查是否关闭selinux：";getenforce && grep 'SELINUX=disabled' /etc/selinux/config
+
+sed -ri 's/.*swap.*/#&/' /etc/fstab
+swapoff -a
+echo "检查swap是否关闭：";grep -i 'swap' /etc/fstab;free -h | grep -i 'swap'
+
+
+#设置主机名
+etc服务器：
+#192.168.40.180
+hostnamectl set-hostname k8s-master1
+#192.168.40.181
+hostnamectl set-hostname k8s-node1
+#192.168.40.182
+hostnamectl set-hostname k8s-node2
+# 添加hosts
+cat >> /etc/hosts << EOF
+192.168.40.180 k8s-master1
+192.168.40.181 k8s-node1
+192.168.40.182 k8s-node2
+EOF
+
+
+[root@k8s-master1 network-scripts]# less ifcfg-ens33 
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+IPADDR=192.168.40.180
+NETMASK=255.255.255.0
+GATEWAY=192.168.40.2
+DNS1=192.168.40.2
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens33
+UUID=2dfae996-da25-4f80-a10f-9f4511a882a0
+DEVICE=ens33
+ONBOOT=yes
+
+
+
+
+
+
+
+
+
+cat >> /etc/hosts <<EOF
+192.168.40.180 k8s-master1
+192.168.40.181 k8s-node1
+192.168.40.182 k8s-node2
+EOF
+
+
+
+mkdir /etc/docker
+cat >>/etc/docker/daemon.json<<'EOF'
+{
+    "registry-mirrors": ["https://i0431ebw.mirror.aliyuncs.com"],
+    "exec-opts": ["native.cgroupdriver=systemd"]
+}
+EOF
+
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+
+
+sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+
+source /etc/bash_completion.d/docker-compose
+
+
+
+#在3台虚拟机都配置k8s的yum源
+cat >/etc/yum.repos.d/kubernetes.repo <<'EOF'
+[kubernetes]
+name = Kubernetes
+baseurl = https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled = 1
+gpgcheck = 0
+repo_gpgcheck = 0
+gpgkey = https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+
+
+
+
+#在3台虚拟机上都执行安装kubeadm、kubelet、kubectl（kubeadm和kubectl都是工具，kubelet才是系统服务）
+#查看yum可获取的kubeadm版本，这里安装1.22.17版本，不指定版本的话默认安装最新版本
+yum list --showduplicates | grep  kubeadm
+#安装kubeadm、kubelet、kubectl
+yum -y install kubelet-1.24.1 kubeadm-1.24.1 kubectl-1.24.1
+#设置kubelet开机自启（先不用启动，也起不了，后面kubeadm init初始化master时会自动拉起kubelet）
+systemctl enable kubelet
+
+
+
+
+#提前拉取镜像，加快安装（此步骤可做可不做）
+#master节点提前拉取镜像,这里使用阿里云的镜像
+kubeadm  config images list --kubernetes-version=v1.24.1 --image-repository=registry.aliyuncs.com/google_containers
+kubeadm  config images pull --kubernetes-version=v1.24.1 --image-repository=registry.aliyuncs.com/google_containers
+# kubeadm init --help可以查看命令的具体参数用法
+#在master节点执行初始化（node节点不用执行）
+kubeadm init \
+--apiserver-advertise-address=192.168.40.180 \
+--image-repository registry.aliyuncs.com/google_containers \
+--kubernetes-version v1.22.17 \
+--service-cidr=10.96.0.0/12 \
+--pod-network-cidr=10.244.0.0/16
+
+
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.40.180:6443 --token dg641j.a7t8dftfur9alvnf \
+        --discovery-token-ca-cert-hash sha256:d1256868858370ad16a59a58156d95e6c0473e6c0f3c60d785ffce7fadc88a06 
+		
+		
+		
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+#kubectl 配置命令自动补全
+yum install -y bash-completion
+echo 'source /usr/share/bash-completion/bash_completion' >> ~/.bashrc
+echo 'source  <(kubectl completion bash)' >> ~/.bashrc
+source ~/.bashrc
+
+
+
+#在步骤四初始化完成master节点之后会提示你在node节点执行如下的命令来将node节点加入k8s集群，如下所示，复制它到node节点执行即可；
+#注意：这段kubeamd join命令的token只有24h，24h就过期，需要执行kubeadm token create --print-join-command 重新生成。
+#执行kubeadm token create --print-join-command 重新生成的命令，打印输出来是默认node角色的，如果新节点是作为master节点角色，那么
+#需要在打印出来的命令后面添加--control-plane 参数再执行。 
+#在node1、node2节点执行
+kubeadm join 192.168.40.180:6443 --token dg641j.a7t8dftfur9alvnf \
+        --discovery-token-ca-cert-hash sha256:d1256868858370ad16a59a58156d95e6c0473e6c0f3c60d785ffce7fadc88a06 
+		
+
+
+#在master节点配置pod网络创建
+#node节点加入k8s集群后，在master上执行kubectl get nodes发现状态是NotReady，因为还没有部署CNI网络插件，其实在步骤四初始化
+#完成master节点的时候k8s已经叫我们去配置pod网络了。在k8s系统上Pod网络的实现依赖于第三方插件进行，这类插件有近数十种之多，较为
+#著名的有flannel、calico、canal和kube-router等，简单易用的实现是为CoreOS提供的flannel项目。
+
+#执行下面这条命令在线配置pod网络，因为是国外网站，所以可能报错，测试去http://ip.tool.chinaz.com/网站查到
+#域名raw.githubusercontent.com对应的IP，把域名解析配置到/etc/hosts文件，然后执行在线配置pod网络，多尝试几次即可成功。
+ 
+ 
+sudo service network-manager restart
+ sudo systemd-resolve --flush-caches
+
+
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml					
+#查看pod状态,全部是Running状态即为正常
+kubectl get pods -n kube-system
+#查看节点状态全部是Ready则表明pod网络已经配置成功
+kubectl get nodes										
+
+
+kubectl create deployment httpd --image=httpd
+kubectl expose deployment httpd --port=80 --type=NodePort
+#状态是Running即为正常
+kubectl get pod | grep -i httpd
+#获取httpd访问url
+echo $(kubectl get node -owide | grep  'control-plane' | awk '{print $6}'):\
+$(kubectl get service/httpd | grep -v NAME  | awk '{print $5}' | awk  -F':' '{print $2}' | awk -F'/' '{print $1}')
+
+
+http://192.168.40.182:32076/
+
+
+
+
+cat<<'EOF' | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  labels:
+    app: busybox
+spec:
+  containers:
+  - image: busybox:1.24.1
+    command:
+      - sleep
+      - "99999999999999"
+    imagePullPolicy: IfNotPresent
+    name: busybox
+  restartPolicy: Always
+EOF
+kubectl  exec -it busybox -- nslookup kubernetes.default
+kubectl  exec -it busybox -- nslookup kube-dns.kube-system
+#返回类似于，则说明dns解析正常
+Server:    10.96.0.10
+Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      kube-dns.kube-system
+Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+
+
+
+
+
+
+
+
+echo $(kubectl get node -owide | grep  'control-plane' | awk '{print $6}'):$(kubectl get service/httpd | grep -v NAME  | awk '{print $5}' | awk  -F':' '{print $2}' | awk -F'/' '{print $1}')
+
+echo $(kubectl get node -owide | grep  'control-plane' | awk '{print $6}'):$(kubectl get service/httpd | grep -v NAME  | awk '{print $5}' | awk  -F':' '{print $2}' | awk -F'/' '{print $1}')
+
+
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.3/aio/deploy/recommended.yaml
+
+
+
+kubectl describe secrets -n kubernetes-dashboard admin-user-token  | grep token | awk 'NR==3{print $2}'
+
+
+
+
+
+升级k8s
+[root@k8s-master1 ~]# yum install -y kubeadm-1.24.1-0 --disableexcludes=kubernetes
+
+[root@k8s-master1 ~]# kubectl drain k8s-master1  --delete-emptydir-data  --force --ignore-daemonsets
+node/k8s-master1 cordoned
+WARNING: ignoring DaemonSet-managed Pods: kube-flannel/kube-flannel-ds-vb2kn, kube-system/kube-proxy-c7t9x
+node/k8s-master1 drained
+
+
+
+
+
+
+
+
+
+
+
