@@ -2,22 +2,43 @@
 
 # 在master添加hosts
 cat >> /etc/hosts << EOF
-192.168.116.130 k8s-master1
-192.168.116.131 k8s-master2
-192.168.116.132 k8s-node1
-192.168.116.133 k8s-node2
-192.168.116.134 k8s-node3
+192.168.40.180 k8s-master1
+192.168.40.181 k8s-node1
+192.168.40.182 k8s-node2
 EOF
+
+
+[root@k8s-master1 network-scripts]# less ifcfg-ens33 
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+IPADDR=192.168.40.180
+NETMASK=255.255.255.0
+GATEWAY=192.168.40.2
+DNS1=192.168.40.2
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens33
+UUID=2dfae996-da25-4f80-a10f-9f4511a882a0
+DEVICE=ens33
+ONBOOT=yes
+
 
 
 
 etc服务器：
-#192.168.116.129
-hostnamectl set-hostname k8s-etcd1
-#192.168.116.135
-hostnamectl set-hostname k8s-etcd2
-#192.168.116.136
-hostnamectl set-hostname k8s-etcd3
+#192.168.40.180
+hostnamectl set-hostname k8s-master1
+#192.168.40.181
+hostnamectl set-hostname k8s-node1
+#192.168.40.182
+hostnamectl set-hostname k8s-node2
 
 
 
